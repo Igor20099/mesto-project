@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,20 +8,73 @@
     <link rel="stylesheet" href="./pages/index.css">
     <title>Mesto</title>
 </head>
+
 <body class="page">
     <!--Header-->
     <header class="header page__header">
         <img src="./images/logo/logo-white.svg" alt="Логотип" class="header__logo">
     </header>
-    <!--Profile-->
-    <section class="profile">
-        <img src="./images/avatar.jpg" alt="Жак-Ив Кусто" class="profile__image">
-        <div class="profile__intro">
-            <p class="profile__name">Жак-Ив Кусто</p>
-            <button class="profile__edit-button"><img src="./images/edit-button.svg" alt=""></button>
-            <p class="profile__profession">Исследователь океана</p>
-        </div>
-        <button class="profile__add-button"><img src="./images/add-button.svg" alt=""></button>
-    </section>
+    <main class="content">
+        <!--Profile-->
+        <section class="profile">
+            <img src="./images/avatar.jpg" alt="Жак-Ив Кусто" class="profile__image">
+            <div class="profile__intro">
+                <p class="profile__name">Жак-Ив Кусто</p>
+                <button class="profile__edit-button"><img src="./images/edit-button.svg" alt=""></button>
+                <p class="profile__profession">Исследователь океана</p>
+            </div>
+            <button class="profile__add-button"><img src="./images/add-button.svg" alt=""></button>
+        </section>
+        <!--Elements-->
+        <section class="elements">
+            <div class="element">
+                <img src="./images/kirill-pershin-1088404.jpg" alt="" class="element__image">
+                <div class="element__wrapper">
+                    <p class="element__title">Карачаевск</p>
+                    <button class="element__like-button"></button>
+                </div>
+            </div>
+            <div class="element">
+                <img src="./images/kirill-pershin-1404681.jpg" alt="" class="element__image">
+                <div class="element__wrapper">
+                    <p class="element__title">Гора Эльбрус</p>
+                    <button class="element__like-button"></button>
+                </div>  
+            </div>
+            <div class="element">
+                <img src="./images/kirill-pershin-1556355.jpg" alt="" class="element__image">
+                <div class="element__wrapper">
+                    <p class="element__title">Домбай</p>
+                    <button class="element__like-button"></button>
+                </div>
+            </div>
+            <div class="element">
+                <img src="./images/kirill-pershin-1404681.jpg" alt="" class="element__image">
+                <div class="element__wrapper">
+                    <p class="element__title">Гора Эльбрус</p>
+                    <button class="element__like-button"></button>
+                </div>  
+            </div>
+            <div class="element">
+                <img src="./images/kirill-pershin-1556355.jpg" alt="" class="element__image">
+                <div class="element__wrapper">
+                    <p class="element__title">Домбай</p>
+                    <button class="element__like-button"></button>
+                </div>  
+            </div>
+            <div class="element">
+                <img src="./images/kirill-pershin-1088404.jpg" alt="" class="element__image">
+                <div class="element__wrapper">
+                    <p class="element__title">Карачаевск</p>
+                    <button class="element__like-button"></button>
+                </div>  
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
+    </footer>
+
 </body>
+
 </html>
