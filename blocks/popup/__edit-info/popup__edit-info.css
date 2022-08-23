@@ -1,0 +1,7 @@
+.popup__edit-info {
+    display: flex;
+    flex-direction: column;
+    color: #000;
+    justify-content: center;
+    align-items: center;
+}
