@@ -1,12 +1,14 @@
 .popup__container {
-    max-width: 430px;
+    max-width: 500px;
     background-color: #fff;
     position: fixed;
     border-radius: 10px;
+    top: 30%;
 }
 
 @media screen and (max-width: 500px) {
     .popup__container {
         max-width: 282px;
+        top: 23%;
     }
 }

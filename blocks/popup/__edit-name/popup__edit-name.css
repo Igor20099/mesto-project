@@ -1,6 +1,6 @@
 .popup__edit-name {
-    margin-bottom: 30px;
-    width: 76%;
+    margin-bottom: 32px;
+    width: 84%;
     border: 0;
     color: #000;
     outline: none;
@@ -8,5 +8,11 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 17px;
-    padding-bottom: 13px;
+    padding-bottom: 8px;
+}
+
+@media screen and (max-width: 500px) {
+    .popup__edit-name {
+        margin-bottom: 30px;
+    }
 }

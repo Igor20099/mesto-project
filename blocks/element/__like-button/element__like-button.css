@@ -9,6 +9,7 @@
     background-color: white;
     opacity: 1;
     transition: .2s ease-in-out;
+    margin-right: 5px;
 }
 
 .element__like-button:hover {
