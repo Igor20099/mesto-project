@@ -4,9 +4,10 @@
     line-height: 29px;
     margin: 34px 86px 45px 30px;
     max-width: 84%;
+    color: #000;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 515px) {
     .popup__edit-title {
         font-size: 18px;
         line-height: 22px;

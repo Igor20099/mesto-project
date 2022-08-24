@@ -1,17 +1,8 @@
 .popup__edit-about {
     margin-bottom: 48px;
-    width: 84%;
-    border: 0;
-    color: #000;
-    outline: none;
-    border-bottom: 1px solid rgba(0, 0, 0, .2);
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 17px;
-    padding-bottom: 6px;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 515px) {
     .popup__edit-about {
         margin-bottom: 45px;
     }

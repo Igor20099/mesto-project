@@ -4,9 +4,3 @@
     align-items: center;
     margin: 25px 15px 28px 21px;
 }
-
-@media screen and (max-width: 500px) {
-    .element__wrapper {
-        margin-bottom: 28px;
-    }
-}
