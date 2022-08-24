@@ -7,3 +7,5 @@
 * Адаптивная верстка
 * Flexbox
 * CSS Grid
+
+[Ссылка на проект](https://igor20099.github.io/mesto-project/)
