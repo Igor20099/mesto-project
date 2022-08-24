@@ -5,6 +5,10 @@
     padding: 0;
     margin: 0 0 0 30px;
     align-self: flex-start;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 330px;
 }
 
 @media screen and (max-width: 730px) {
@@ -14,10 +18,11 @@
     }
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 443px) {
     .profile__about {
         font-size: 14px;
         line-height: 17px;
         margin: 8px 0 0 0;
+        max-width: 220px;
     }
 }

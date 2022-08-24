@@ -3,12 +3,12 @@
     background-color: #fff;
     position: fixed;
     border-radius: 10px;
-    top: 38%;
+    top: 34%;
 }
 
 @media screen and (max-width: 500px) {
     .popup__container {
         max-width: 282px;
-        top: 23%;
+        top: 22%;
     }
 }
