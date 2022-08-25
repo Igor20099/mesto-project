@@ -2,14 +2,21 @@
     margin: 22px 0 0 0;
     padding: 0;
     display: flex;
-    max-width: 450px;
+    max-width: 410px;
     flex-wrap: wrap;
     align-items: center;
 }
 
 @media screen and (max-width: 730px) {
     .profile__info {
-        max-width: 500px;
+        max-width: 450px;
         justify-content: center;
+        align-items: center;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .profile__info {
+        max-width: 266px;
     }
 }
