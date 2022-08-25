@@ -40,6 +40,6 @@
 @import url('../blocks/popup/__edit-info/popup__edit-info.css');
 @import url('../blocks/popup/__edit-title/popup__edit-title.css');
 @import url('../blocks/popup/__edit-input/popup__edit-input.css');
-@import url('../blocks/popup/__edit-name/popup__edit-name.css');
-@import url('../blocks/popup/__edit-about/popup__edit-about.css');
+@import url('../blocks/popup/__edit-input/_el/popup__edit-input_el_edit-name.css');
+@import url('../blocks/popup/__edit-input/_el/popup__edit-input_el_edit-about.css');
 @import url('../blocks/popup/__save-button/popup__save-button.css');

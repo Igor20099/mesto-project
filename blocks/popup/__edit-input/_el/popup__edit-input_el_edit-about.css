@@ -1,9 +1,9 @@
-.popup__edit-about {
+.popup__edit-input_el_edit-about {
     margin-bottom: 48px;
 }
 
 @media screen and (max-width: 515px) {
-    .popup__edit-about {
+    .popup__edit-input_el_edit-about {
         margin-bottom: 45px;
     }
 }

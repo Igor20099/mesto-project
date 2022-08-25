@@ -7,11 +7,15 @@
     align-items: center;
 }
 
-@media screen and (max-width: 730px) {
+@media screen and (max-width: 879px) {
+    .profile {
+        padding: 0 60px;
+    }
+}
+
+@media screen and (max-width: 800px) {
     .profile {
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
         padding: 0 19px 0;
     }
 }

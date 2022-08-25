@@ -13,13 +13,14 @@
     margin-top: 35px;
     opacity: 1;
     transition: .2s ease-in-out;
+    margin-bottom: 16px;
 }
 
 .profile__add-button:hover {
     opacity: .6;
 }
 
-@media screen and (max-width: 730px) {
+@media screen and (max-width: 800px) {
   .profile__add-button {
     width: 100%;
   }
@@ -28,5 +29,6 @@
 @media screen and (max-width: 500px) {
   .profile__add-button {
     background-size: 16px 16px;
+    margin-top: 30px;
   }
 }
