@@ -1,9 +1,0 @@
-.popup__edit-input_el_edit-name {
-    margin-bottom: 32px; 
-}
-
-@media screen and (max-width: 515px) {
-    .popup__edit-input_el_edit-name {
-        margin-bottom: 30px;
-    }
-}

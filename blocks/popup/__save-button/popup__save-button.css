@@ -5,7 +5,7 @@
     background-color: rgba(0,0,0,1);
     color: #fff;
     border-radius: 2px;
-    margin: 0 30px 37px;
+    margin: 18px 30px 40px;
     cursor: pointer;
     opacity: 1;
     transition: .2s ease-in-out;
@@ -21,7 +21,7 @@
 
 @media screen and (max-width: 515px) {
     .popup__save-button {
-        margin: 0 20px 25px;
+        margin: 16px 20px 18px;
         font-size: 14px;
         line-height: 17px;
     }
