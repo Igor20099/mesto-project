@@ -27,48 +27,16 @@
         </section>
         <!--Elements-->
         <section class="elements content__elements">
-            <div class="element elements__element">
-                <img src="./images/kirill-pershin-1088404.jpg" alt="Карачаевск" class="element__image">
+            <template id="element" class="element elements__element">
+                <div class="element elements__element">
+                <img src="./images/kirill-pershin-1088404.jpg" alt="" class="element__image">
+                <button type="button" class="element__remove-button"></button>
                 <div class="element__wrapper">
                     <h2 class="element__title">Карачаевск</h2>
                     <button type="button" class="element__like-button"></button>
                 </div>
             </div>
-            <div class="element elements__element">
-                <img src="./images/kirill-pershin-1404681.jpg" alt="Гора Эльбрус" class="element__image">
-                <div class="element__wrapper">
-                    <h2 class="element__title">Гора Эльбрус</h2>
-                    <button type="button" class="element__like-button"></button>
-                </div>
-            </div>
-            <div class="element elements__element">
-                <img src="./images/kirill-pershin-1556355.jpg" alt="Домбай" class="element__image">
-                <div class="element__wrapper">
-                    <h2 class="element__title">Домбай</h2>
-                    <button type="button" class="element__like-button"></button>
-                </div>
-            </div>
-            <div class="element elements__element">
-                <img src="./images/kirill-pershin-1404681.jpg" alt="Гора Эльбрус" class="element__image">
-                <div class="element__wrapper">
-                    <h2 class="element__title">Гора Эльбрус</h2>
-                    <button type="button" class="element__like-button"></button>
-                </div>
-            </div>
-            <div class="element elements__element">
-                <img src="./images/kirill-pershin-1556355.jpg" alt="Домбай" class="element__image">
-                <div class="element__wrapper">
-                    <h2 class="element__title">Домбай</h2>
-                    <button type="button" class="element__like-button"></button>
-                </div>
-            </div>
-            <div class="element elements__element">
-                <img src="./images/kirill-pershin-1088404.jpg" alt="Карачаево-Черкесия" class="element__image">
-                <div class="element__wrapper">
-                    <h2 class="element__title">Карачаево-Черкесия</h2>
-                    <button type="button" class="element__like-button"></button>
-                </div>
-            </div>
+            </template>
         </section>
     </main>
     <!--Footer-->
@@ -76,17 +44,30 @@
         <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
     </footer>
     <!--Popup-edit-->
-    <div class="popup">
+    <div class="popup popup_edit-profile">
         <div class="popup__container">
             <button type="button" class="popup__close-button"></button>
             <h2 class="popup__edit-title">Редактировать профиль</h2>
             <form name="edit-info" class="popup__edit-info">
-                <input name="edit-name" type="text" value="Жак-Ив Кусто" class="popup__edit-input">
-                <input name="edit-about" type="text" value="Исследователь океана" class="popup__edit-input">
+                <input name="edit-name" type="text" value="Жак-Ив Кусто" placeholder="Имя"  class="popup__edit-input popup__edit-input_type_name">
+                <input name="edit-about" type="text" value="Исследователь океана" placeholder="О себе" class="popup__edit-input popup__edit-input_type_about">
                 <button type="submit" class="popup__save-button">Сохранить</button>
             </form>
         </div>
     </div>
+    <!--Popup-add-card-->
+    <div class="popup popup_add-card">
+        <div class="popup__container">
+            <button type="button" class="popup__close-button"></button>
+            <h2 class="popup__edit-title">Новое место</h2>
+            <form name="edit-info" class="popup__edit-info">
+                <input name="edit-name" type="text" placeholder="Название" class="popup__edit-input popup__edit-input_type_name">
+                <input name="edit-about" type="text" placeholder="Ссылка на картинку" class="popup__edit-input popup__edit-input_type_link-image">
+                <button type="submit" class="popup__save-button">Сохранить</button>
+            </form>
+        </div>
+    </div>
+    <script src="./scripts/script.js"></script>
 </body>
 
 </html>
