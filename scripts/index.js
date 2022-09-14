@@ -54,7 +54,7 @@ const popupImageTitle = popupFullsizeImage.querySelector('.popup__image-title');
 const popupFullSizeImageCloseButton = popupFullsizeImage.querySelector('.popup__close-button');
 
 //cards
-const elements = document.querySelector('.elements');
+const elementContainer = document.querySelector('.elements');
 const elementTemplate = document.querySelector('#element').content;
 const elementlikeButton = document.querySelector('.element__like-button');
 
@@ -91,22 +91,26 @@ function renderCard(item) {
   element.querySelector('.element__image').alt = item.name;
   element.querySelector('.element__image').addEventListener('click', () => {
     popupImage.src = element.querySelector('.element__image').src;
+    popupImage.alt = element.querySelector('.element__image').alt;
     popupImageTitle.textContent = element.querySelector('.element__image').alt;
     openPopup(popupFullsizeImage);
   });
   element.querySelector('.element__title').textContent = item.name;
   likeCard(element);
   removeCard(element);
-  elements.prepend(element);
+  return element;
 }
+
 
 //отображения карточек с массива initialCards
 initialCards.forEach(item => {
-  renderCard(item);
+  elementContainer.prepend(renderCard(item));
 })
 
 //Открытие popupEditProfile
 profileEditButton.addEventListener('click', () => {
+  popupNameInput.value = profileName.textContent;
+  popupAboutInput.value = profileAbout.textContent;
   openPopup(popupEditProfile);
 });
 
@@ -144,21 +148,21 @@ popupFullSizeImageCloseButton.addEventListener('click', () => {
 })
 
 //Функция обработки AddForm
-function AddFormSubmitHandler(evt) {
+function addFormSubmitHandler(evt) {
   evt.preventDefault();
-  const AddNameValue = popupAddNameInput.value;
+  const addNameValue = popupAddNameInput.value;
   const linkImageValue = popupLinkImageInput.value;
   const card = {};
-  card.name = AddNameValue;
+  card.name = addNameValue;
   card.link = linkImageValue;
-  renderCard(card);
+  elementContainer.prepend(renderCard(card));
   popupAddNameInput.value = '';
   popupLinkImageInput.value = '';
   closePopup(popupAddCard);
 }
 
 //Слушатель событий для popupAddForm
-popupAddForm.addEventListener('submit', AddFormSubmitHandler);
+popupAddForm.addEventListener('submit', addFormSubmitHandler);
 
 
 
