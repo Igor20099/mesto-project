@@ -5,4 +5,5 @@
     border-top-left-radius: 10px;
     min-height: 282px;
     display: block;
+    cursor: pointer;
 }
