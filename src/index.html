@@ -12,12 +12,12 @@
 <body class="page">
     <!--Header-->
     <header class="header page__header">
-        <img src="./images/logo/logo-white.svg" alt="Логотип" class="header__logo">
+        <img src="<%=require('./images/logo/logo-white.svg')%>" alt="Логотип" class="header__logo">
     </header>
     <main class="content">
         <!--Profile-->
         <section class="profile content__profile">
-            <img src="./images/avatar.jpg" alt="Жак-Ив Кусто" class="profile__image">
+            <img src="<%=require('./images/avatar.jpg')%>" alt="Жак-Ив Кусто" class="profile__image">
             <div class="profile__info">
                 <h1 class="profile__name">Жак-Ив Кусто</h1>
                 <button type="button" class="profile__edit-button"></button>
@@ -48,11 +48,13 @@
         <div class="popup__container">
             <button type="button" class="popup__close-button"></button>
             <h2 class="popup__title">Редактировать профиль</h2>
-            <form name="edit-info" class="popup__edit-info">
-                <input name="edit-name" type="text" value="Жак-Ив Кусто" placeholder="Имя"
-                    class="popup__input popup__edit-input_type_name">
-                <input name="edit-about" type="text" value="Исследователь океана" placeholder="О себе"
-                    class="popup__input popup__edit-input_type_about">
+            <form name="edit-info" class="popup__edit-info" novalidate>
+                <input id="edit-name-input" name="edit-name" type="text" value="Жак-Ив Кусто" placeholder="Имя"
+                    class="popup__input popup__edit-input_type_name" minlength="2" maxlength="40" pattern="^[a-zA-Zа-яА-я-\s]+$" required>
+                <span class="popup__input-error edit-name-input-error"></span>     
+                <input id="edit-about-input" name="edit-about" type="text" value="Исследователь океана" placeholder="О себе"
+                    class="popup__input popup__edit-input_type_about" minlength="2" maxlength="200" pattern="^[a-zA-Zа-яА-я-\s]+$" required>
+                <span class="popup__input-error edit-about-input-error"></span>      
                 <button type="submit" class="popup__save-button">Сохранить</button>
             </form>
         </div>
@@ -62,11 +64,13 @@
         <div class="popup__container">
             <button type="button" class="popup__close-button"></button>
             <h2 class="popup__title">Новое место</h2>
-            <form name="card-form" class="popup__edit-info">
-                <input name="card-name" type="text" placeholder="Название"
-                    class="popup__input popup__edit-input_type_name">
-                <input name="card-link-image" type="text" placeholder="Ссылка на картинку"
-                    class="popup__input popup__edit-input_type_link-image">
+            <form name="card-form" class="form popup__edit-info" novalidate>
+                <input id="card-name-input" name="card-name" type="text" placeholder="Название"
+                    class="popup__input popup__edit-input_type_name" minlength="2" maxlength="30" pattern="^[a-zA-Zа-яА-я-\s]+$" required>
+                <span class="popup__input-error card-name-input-error"></span> 
+                <input id="card-link-image-input" name="card-link-image" type="url" placeholder="Ссылка на картинку"
+                    class="popup__input popup__edit-input_type_link-image" pattern="^[a-zA-Zа-яА-я-\s]+$" required>
+                <span class="popup__input-error card-link-image-input-error"></span>    
                 <button type="submit" class="popup__save-button">Создать</button>
             </form>
         </div>

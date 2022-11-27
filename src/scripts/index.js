@@ -1,4 +1,5 @@
 //Начальные карточки для загрузки
+import '../pages/index.css'
 const initialCards = [
   {
     name: 'Архыз',
@@ -57,6 +58,7 @@ const popupFullSizeImageCloseButton = popupFullsizeImage.querySelector('.popup__
 const elementContainer = document.querySelector('.elements');
 const elementTemplate = document.querySelector('#element').content;
 const elementlikeButton = document.querySelector('.element__like-button');
+
 
 //функция открытия popup  
 function openPopup(popup) {
@@ -164,8 +166,110 @@ function addFormSubmitHandler(evt) {
 //Слушатель событий для popupAddForm
 popupAddForm.addEventListener('submit', addFormSubmitHandler);
 
+//Валидация
+const popupForm = popupEditProfile.querySelector('.popup__edit-info')
+
+const showInputError = (formElement, inputElement, errorMessage) => {
+  // Находим элемент ошибки внутри самой функции
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  // Остальной код такой же
+  inputElement.classList.add('popup__input_type_error');
+  errorElement.textContent = errorMessage;
+  errorElement.classList.add('popup__input-error_active');
+};
+
+const hideInputError = (formElement, inputElement) => {
+  // Находим элемент ошибки
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  // Остальной код такой же
+  inputElement.classList.remove('popup__input_type_error');
+  errorElement.classList.remove('popup__input-error_active');
+  errorElement.textContent = '';
+}; 
+
+const hasInvalidInput = (inputList) => {
+  // проходим по этому массиву методом some
+  return inputList.some((inputElement) => {
+        // Если поле не валидно, колбэк вернёт true
+    // Обход массива прекратится и вся функция
+    // hasInvalidInput вернёт true
+
+    return !inputElement.validity.valid;
+  })
+}; 
+
+const toggleButtonState = (inputList, buttonElement) => {
+  // Если есть хотя бы один невалидный инпут
+  if (hasInvalidInput(inputList)) {
+    // сделай кнопку неактивной
+        buttonElement.disabled = true;
+    buttonElement.classList.add('popup__save-button_inactive');
+  } else {
+        // иначе сделай кнопку активной
+        buttonElement.disabled = false;
+    buttonElement.classList.remove('popup__save-button_inactive');
+  }
+}; 
+
+const isValid = (formElement,inputElement) => {
+  if (!inputElement.validity.valid) {
+    // Если поле не проходит валидацию, покажем ошибку
+    showInputError(formElement, inputElement, inputElement.validationMessage);
+  } else {
+    // Если проходит, скроем
+    hideInputError(formElement, inputElement);
+  }
+};
+
+const setEventListeners = (formElement) => {
+  // Находим все поля внутри формы,
+  // сделаем из них массив методом Array.from
+  const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
+
+  const buttonElement = formElement.querySelector('.popup__save-button');
+  toggleButtonState(inputList, buttonElement);
+  // Обойдём все элементы полученной коллекции
+  inputList.forEach((inputElement) => {
+  
+    // каждому полю добавим обработчик события input
+    inputElement.addEventListener('input', () => {
+      
+      
+      // Внутри колбэка вызовем isValid,
+      // передав ей форму и проверяемый элемент
+      isValid(formElement, inputElement)
+      toggleButtonState(inputList, buttonElement);
+    });
+  });
+}; 
+
+
+const enableValidation = () => {
+ 
+    setEventListeners(popupForm);
+};
+
+// Вызовем функцию
+enableValidation(); 
 
 
 
+document.addEventListener('keydown', (evt) => {
+  if (evt.key === 'Escape'){
+   closePopup(popupEditProfile);
+   closePopup(popupAddCard);
+   closePopup(popupFullsizeImage);
+  }
+})
 
-
+document.addEventListener('click', (evt) => {
+  if (evt.target === popupEditProfile) {
+     closePopup(popupEditProfile);
+  }
+  else if(evt.target === popupAddCard) {
+    closePopup(popupAddCard);
+  }
+  else if(evt.target === popupFullsizeImage) {
+    closePopup(popupFullsizeImage);
+  }
+})
