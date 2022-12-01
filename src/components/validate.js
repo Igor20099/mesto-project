@@ -84,7 +84,7 @@ export function setEventListeners(
 ) {
   const inputList = Array.from(formSelector.querySelectorAll(inputSelector));
   const buttonElement = formSelector.querySelector(submitButtonSelector);
-  toggleButtonState(inputList, buttonElement);
+  toggleButtonState(inputList, buttonElement,inactiveButtonClass);
   inputList.forEach((inputElement) => {
     inputElement.addEventListener("input", () => {
       isValid(formSelector, inputElement, inputErrorClass, errorClass);
@@ -105,5 +105,28 @@ export function enableValidation(settings) {
       settings.inputErrorClass,
       settings.errorClass
     );
+  });
+}
+
+export function clearValidation(formElement) {
+  const inputList = Array.from(formElement.querySelectorAll(".popup__input"));
+  const errorMessages = Array.from(
+    formElement.querySelectorAll(".popup__input-error")
+  );
+  const buttonElement = formElement.querySelector(".popup__save-button");
+  inputList.forEach((inputElement) => {
+    if (inputElement.classList.contains("popup__input_type_error")) {
+      inputElement.classList.remove("popup__input_type_error");
+      toggleButtonState(
+        inputList,
+        buttonElement,
+        "popup__save-button_inactive"
+      );
+    }
+  });
+  errorMessages.forEach((errorMessage) => {
+    if (errorMessage.classList.contains("popup__input-error_active")) {
+      errorMessage.classList.remove("popup__input-error_active");
+    }
   });
 }

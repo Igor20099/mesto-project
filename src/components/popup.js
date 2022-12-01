@@ -86,6 +86,5 @@ export function addFormSubmitHandler(evt) {
   elementContainer.prepend(renderCard(card));
   popupAddNameInput.value = "";
   popupLinkImageInput.value = "";
-  enableValidation(popupAddForm);
   closePopup(popupAddCard);
 }
