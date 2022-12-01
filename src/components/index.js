@@ -73,11 +73,6 @@ popupEditProfileCloseButton.addEventListener("click", () => {
   closePopup(popupEditProfile);
 });
 
-
-
-//Закрытие popup по нажатию ан кнопку "Esc"
-document.addEventListener("keydown",closeByEscape);
-
 //Закрытие popup по клику на оверлей
 document.addEventListener("click", (evt) => {
   if (evt.target === popupEditProfile) {
