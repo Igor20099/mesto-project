@@ -54,15 +54,27 @@ export const popupImageTitle = popupFullsizeImage.querySelector(
 export const popupFullSizeImageCloseButton = popupFullsizeImage.querySelector(
   ".popup__close-button"
 );
+export const popupAddSaveButton = popupAddForm.querySelector(".popup__save-button");
+export const popupEditSaveButton = popupEditForm.querySelector(".popup__save-button");
+
+//Закрытие popup на кнопку ESC
+export function closeByEscape(evt) {
+  if (evt.key === 'Escape') {
+    const openedPopup = document.querySelector('.popup_opened')
+   closePopup(openedPopup);
+  }
+}
 
 //функция открытия popup
 export function openPopup(popup) {
   popup.classList.add("popup_opened");
+  document.addEventListener('keydown', closeByEscape); 
 }
 
 //функция закрытия popup
 export function closePopup(popup) {
   popup.classList.remove("popup_opened");
+  document.removeEventListener('keydown', closeByEscape); 
 }
 
 //Функция обработки editForm
@@ -88,3 +100,5 @@ export function addFormSubmitHandler(evt) {
   popupLinkImageInput.value = "";
   closePopup(popupAddCard);
 }
+
+

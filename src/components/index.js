@@ -27,6 +27,9 @@ import {
   closePopup,
   editFormSubmitHandler,
   addFormSubmitHandler,
+  popupAddSaveButton,
+  popupEditSaveButton,
+  closeByEscape,
 } from "./popup";
 import {
   profile,
@@ -36,7 +39,14 @@ import {
   profileAddButton,
 } from "./profile";
 
-import { enableValidation, toggleButtonState,isValid ,clearValidation} from "./validate";
+import {
+  enableValidation,
+  toggleButtonState,
+  isValid,
+  clearValidation,
+} from "./validate";
+
+
 
 //отображения карточек с массива initialCards
 initialCards.forEach((item) => {
@@ -45,18 +55,16 @@ initialCards.forEach((item) => {
 
 //Открытие popupEditProfile
 profileEditButton.addEventListener("click", () => {
-  clearValidation(popupEditForm)
+  clearValidation(popupEditForm);
   popupNameInput.value = profileName.textContent;
   popupAboutInput.value = profileAbout.textContent;
-  const popupSaveButton = popupEditForm.querySelector('.popup__save-button')
-  if (popupNameInput.value === '' && popupAboutInput.value === ''){
-    popupSaveButton.classList.add('popup__save-button_inactive')
-    popupSaveButton.disabled = true;
-   }
-   else {
-     popupSaveButton.classList.remove('popup__save-button_inactive')
-    popupSaveButton.disabled = false;
-   }
+  if (popupNameInput.value === "" && popupAboutInput.value === "") {
+    popupEditSaveButton.classList.add("popup__save-button_inactive");
+    popupEditSaveButton.disabled = true;
+  } else {
+    popupEditSaveButton.classList.remove("popup__save-button_inactive");
+    popupEditSaveButton.disabled = false;
+  }
   openPopup(popupEditProfile);
 });
 
@@ -65,14 +73,10 @@ popupEditProfileCloseButton.addEventListener("click", () => {
   closePopup(popupEditProfile);
 });
 
+
+
 //Закрытие popup по нажатию ан кнопку "Esc"
-document.addEventListener("keydown", (evt) => {
-  if (evt.key === "Escape") {
-    closePopup(popupEditProfile);
-    closePopup(popupAddCard);
-    closePopup(popupFullsizeImage);
-  }
-});
+document.addEventListener("keydown",closeByEscape);
 
 //Закрытие popup по клику на оверлей
 document.addEventListener("click", (evt) => {
@@ -90,16 +94,14 @@ popupEditForm.addEventListener("submit", editFormSubmitHandler);
 
 //Открытие popupAddCard
 profileAddButton.addEventListener("click", () => {
-  const popupSaveButton = popupAddForm.querySelector('.popup__save-button')
-  if (popupAddNameInput.value === '' && popupLinkImageInput.value === ''){
-   popupSaveButton.classList.add('popup__save-button_inactive')
-   popupSaveButton.disabled = true;
+  if (popupAddNameInput.value === "" && popupLinkImageInput.value === "" || !popupLinkImageInput.validity.valid || !popupAddNameInput.validity.valid) {
+    popupAddSaveButton.classList.add("popup__save-button_inactive");
+    popupAddSaveButton.disabled = true;
+  } else {
+    popupAddSaveButton.classList.remove("popup__save-button_inactive");
+    popupAddSaveButton.disabled = false;
   }
-  else {
-    popupSaveButton.classList.remove('popup__save-button_inactive')
-   popupSaveButton.disabled = false;
-  }
- 
+
   openPopup(popupAddCard);
 });
 
