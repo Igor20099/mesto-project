@@ -46,8 +46,6 @@ import {
   clearValidation,
 } from "./validate";
 
-
-
 //отображения карточек с массива initialCards
 initialCards.forEach((item) => {
   elementContainer.prepend(renderCard(item));
