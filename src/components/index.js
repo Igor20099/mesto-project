@@ -7,7 +7,6 @@ import {
   removeCard,
   renderCard,
 } from "./card";
-import { initialCards } from "./initialCards";
 import {
   popupEditProfile,
   popupEditForm,
@@ -33,8 +32,10 @@ import {
 } from "./popup";
 import {
   profile,
+  profileId,
   profileName,
   profileAbout,
+  profileAvatar,
   profileEditButton,
   profileAddButton,
 } from "./profile";
@@ -46,10 +47,16 @@ import {
   clearValidation,
 } from "./validate";
 
-//отображения карточек с массива initialCards
-initialCards.forEach((item) => {
-  elementContainer.prepend(renderCard(item));
-});
+import {getUserMe, getInitialCards} from "./api"
+
+
+
+//Инициализация карточек с сервера
+getInitialCards().then(initialCards => {
+  initialCards.forEach(card => {
+    elementContainer.prepend(renderCard(card));
+  })
+})
 
 //Открытие popupEditProfile
 profileEditButton.addEventListener("click", () => {
