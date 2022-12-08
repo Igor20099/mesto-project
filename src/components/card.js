@@ -6,7 +6,7 @@ import {
   openPopup,
 } from "./popup";
 
-import { deleteCard } from "./api";
+import { addLikeCard, deleteCard, deleteLikeCard } from "./api";
 
 export const elementContainer = document.querySelector(".elements");
 export const elementTemplate = document.querySelector("#element").content;
@@ -17,8 +17,25 @@ export const elementlikeButton = document.querySelector(
 //функция лайка карточки
 export function likeCard(element) {
   const elementLikeButton = element.querySelector(".element__like-button");
+  const elementLikeCount = element.querySelector(".element__like-count");
   elementLikeButton.addEventListener("click", () => {
     elementLikeButton.classList.toggle("element__like-button_active");
+    if (elementLikeButton.classList.contains("element__like-button_active")) {
+      addLikeCard(element.id).then((card) => {
+        if (card.likes.length > 0) {
+          elementLikeCount.textContent = card.likes.length;
+        }
+      });
+    } else {
+      deleteLikeCard(element.id).then((card) => {
+        if (card.likes.length > 0) {
+          elementLikeCount.textContent = card.likes.length;
+        }
+        else {
+          elementLikeCount.textContent = ''
+        }
+      });
+    }
   });
 }
 
@@ -26,7 +43,7 @@ export function likeCard(element) {
 export function removeCard(element) {
   const elementRemoveButton = element.querySelector(".element__remove-button");
   elementRemoveButton.addEventListener("click", () => {
-    deleteCard(element.id)
+    deleteCard(element.id);
     element.remove();
   });
 }
@@ -45,15 +62,18 @@ export function renderCard(item, userMe) {
   });
   element.querySelector(".element__title").textContent = item.name;
   const elementLikeCount = element.querySelector(".element__like-count");
-  if (item.likes.length > 0) {
-    elementLikeCount.textContent = item.likes.length;
-  }
-  if (userMe._id === item.owner._id) {
-    const elementRemoveButton = element.querySelector(
-      ".element__remove-button"
-    );
-    elementRemoveButton.classList.add("element__remove-button_active");
-  }
+  // if (item.likes.length > 0) {
+  //   elementLikeCount.textContent = item.likes.length;
+  // }
+  // else {
+  //   elementLikeCount.textContent = '' 
+  // }
+  // if (userMe._id === item.owner._id) {
+  //   const elementRemoveButton = element.querySelector(
+  //     ".element__remove-button"
+  //   );
+  //   elementRemoveButton.classList.add("element__remove-button_active");
+  // }
   likeCard(element);
   removeCard(element);
   return element;

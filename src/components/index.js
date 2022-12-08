@@ -29,6 +29,10 @@ import {
   popupAddSaveButton,
   popupEditSaveButton,
   closeByEscape,
+  popupEditAvatar,
+  popupEditAvatarCloseButton,
+  popupEditAvatarSaveButton,
+  editAvatarSubmitHandler
 } from "./popup";
 import {
   profile,
@@ -38,6 +42,7 @@ import {
   profileAvatar,
   profileEditButton,
   profileAddButton,
+  profileEditAvatarButton
 } from "./profile";
 
 import {
@@ -50,7 +55,7 @@ import {
 import {getUserMe, getInitialCards} from "./api"
 
 Promise.all([getUserMe(),getInitialCards()]).then(([userMe, cards]) => cards.forEach(card => {
-  console.log(card)
+  // console.log(card)
   elementContainer.prepend(renderCard(card,userMe));
 }))
 
@@ -74,6 +79,14 @@ profileEditButton.addEventListener("click", () => {
 popupEditProfileCloseButton.addEventListener("click", () => {
   closePopup(popupEditProfile);
 });
+
+profileEditAvatarButton.addEventListener('click', () => {
+   openPopup(popupEditAvatar)
+})
+
+popupEditAvatarCloseButton.addEventListener('click', () => {
+  closePopup(popupEditAvatar)
+})
 
 //Закрытие popup по клику на оверлей
 document.addEventListener("click", (evt) => {
@@ -114,6 +127,8 @@ popupFullSizeImageCloseButton.addEventListener("click", () => {
 
 //Слушатель событий для popupAddForm
 popupAddForm.addEventListener("submit", addFormSubmitHandler);
+
+popupEditAvatar.addEventListener('submit',editAvatarSubmitHandler)
 
 // Включение валидации
 enableValidation({

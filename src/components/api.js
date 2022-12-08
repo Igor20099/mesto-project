@@ -8,13 +8,13 @@ const config = {
 };
 
 export function getUserMe() {
-    return fetch(`${config.baseUrl}/users/me`, {
-        headers: config.headers,
-      }).then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-      })
+  return fetch(`${config.baseUrl}/users/me`, {
+    headers: config.headers,
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+  });
 }
 
 export function getInitialCards() {
@@ -24,34 +24,71 @@ export function getInitialCards() {
     if (res.ok) {
       return res.json();
     }
-  })
+  });
 }
 
-export function editProfileInfo(name,about) {
+export function editProfileInfo(name, about) {
   return fetch(`${config.baseUrl}/users/me`, {
-    method:'PATCH',
+    method: "PATCH",
     headers: config.headers,
     body: JSON.stringify({
       name: name,
-      about: about
-    })
-  })
+      about: about,
+    }),
+  });
 }
 
 export function addCard(name, link) {
   return fetch(`${config.baseUrl}/cards`, {
-    method:'POST',
+    method: "POST",
     headers: config.headers,
     body: JSON.stringify({
       name: name,
-      link: link
-    })
-  })
+      link: link,
+    }),
+  });
 }
 
 export function deleteCard(cardId) {
   return fetch(`${config.baseUrl}/cards/${cardId}`, {
-    method:'DELETE',
+    method: "DELETE",
     headers: config.headers,
-  })
+  });
 }
+
+export function addLikeCard(cardId) {
+  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+    method: "PUT",
+    headers: config.headers,
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+  });
+}
+
+export function deleteLikeCard(cardId) {
+  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+    method: "DELETE",
+    headers: config.headers,
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+  });
+}
+
+export function changeAvatar(avatar) {
+  return fetch(`${config.baseUrl}/users/me/avatar`, {
+    method: "PATCH",
+    headers: config.headers,
+    body: JSON.stringify({
+      avatar:avatar
+    }),
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+  });
+}
+

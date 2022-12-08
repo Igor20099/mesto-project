@@ -13,9 +13,10 @@ import {
   profileAbout,
   profileEditButton,
   profileAddButton,
+  profileAvatar,
 } from "./profile";
 
-import { editProfileInfo, addCard } from "./api";
+import { editProfileInfo, addCard, changeAvatar } from "./api";
 
 //popup edit profile
 export const popupEditProfile = document.querySelector(".popup_edit-profile");
@@ -29,6 +30,8 @@ export const popupAboutInput = popupEditProfile.querySelector(
 export const popupEditProfileCloseButton = popupEditProfile.querySelector(
   ".popup__close-button"
 );
+
+
 
 //popup add card
 export const popupAddCard = document.querySelector(".popup_add-card");
@@ -57,6 +60,17 @@ export const popupFullSizeImageCloseButton = popupFullsizeImage.querySelector(
 export const popupAddSaveButton = popupAddForm.querySelector(".popup__save-button");
 export const popupEditSaveButton = popupEditForm.querySelector(".popup__save-button");
 
+export const popupEditAvatar = document.querySelector('.popup_edit-avatar')
+export const popupEditAvatarCloseButton = popupEditAvatar.querySelector(
+  ".popup__close-button"
+);
+
+export const popupEditAvatarSaveButton =popupEditAvatar.querySelector(
+  ".popup__save-button"
+);
+const popupAvatarLinkImage = popupEditAvatar.querySelector('.popup__edit-input_type_avatar')
+
+
 //Закрытие popup на кнопку ESC
 export function closeByEscape(evt) {
   if (evt.key === 'Escape') {
@@ -80,17 +94,38 @@ export function closePopup(popup) {
 //Функция обработки editForm
 export function editFormSubmitHandler(evt) {
   evt.preventDefault();
+  popupEditSaveButton.textContent = 'Сохранение...'
   const nameValue = popupNameInput.value;
   const aboutValue = popupAboutInput.value;
   profileName.textContent = nameValue;
   profileAbout.textContent = aboutValue;
-  editProfileInfo(nameValue,aboutValue)
+  editProfileInfo(nameValue,aboutValue).finally(() => {
+    popupEditSaveButton.textContent = 'Сохранить'
+  })
+ 
   closePopup(popupEditProfile);
+}
+
+
+export function editAvatarSubmitHandler(evt) {
+  evt.preventDefault();
+  popupEditAvatarSaveButton.textContent = 'Сохранение...'
+  const linkAvatar = popupAvatarLinkImage.value
+  changeAvatar(linkAvatar).then(userMe => {
+    console.log(linkAvatar)
+    profileAvatar.src = userMe.avatar;
+    profileAvatar.alt = userMe.avatar
+  }).finally(() => {
+    popupEditAvatarSaveButton.textContent = 'Сохранить'
+  })
+ 
+  closePopup(popupEditAvatar);
 }
 
 //Функция обработки AddForm
 export function addFormSubmitHandler(evt) {
   evt.preventDefault();
+  popupAddSaveButton.textContent = 'Создание...'
   const addNameValue = popupAddNameInput.value;
   const linkImageValue = popupLinkImageInput.value;
   const card = {};
@@ -99,7 +134,10 @@ export function addFormSubmitHandler(evt) {
   elementContainer.prepend(renderCard(card));
   popupAddNameInput.value = "";
   popupLinkImageInput.value = "";
-  addCard(addNameValue,linkImageValue)
+  addCard(addNameValue,linkImageValue).finally(() => {
+    popupAddSaveButton.textContent = 'Создать'
+  })
+ 
   closePopup(popupAddCard);
 }
 

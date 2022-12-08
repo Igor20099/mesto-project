@@ -90,6 +90,18 @@
             <p class="popup__image-title"></p>
         </div>
     </div>
+    <div class="popup popup_edit-avatar">
+        <div class="popup__container">
+            <button type="button" class="popup__close-button"></button>
+            <h2 class="popup__title">Обновить аватар</h2>
+            <form name="card-form" class="form popup__form" novalidate>
+                <input id="edit-avatar-link-input" name="edit-avatar-link" type="url" placeholder="Ссылка на аватар"
+                    class="popup__input popup__edit-input_type_avatar" pattern="https?://.+" data-error-message="Введите адрес картинки" required>
+                <span class="popup__input-error edit-avatar-link-input-error"></span>    
+                <button type="submit" class="popup__save-button">Сохранить</button>
+            </form>
+        </div>
+    </div>
 </body>
 
 </html>
