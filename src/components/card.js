@@ -10,9 +10,6 @@ import { addLikeCard, deleteCard, deleteLikeCard } from "./api";
 
 export const elementContainer = document.querySelector(".elements");
 export const elementTemplate = document.querySelector("#element").content;
-export const elementlikeButton = document.querySelector(
-  ".element__like-button"
-);
 
 //функция лайка карточки
 export function likeCard(element) {
@@ -51,6 +48,7 @@ export function removeCard(element) {
 //функция отображения карточки
 export function renderCard(item, userMe) {
   const element = elementTemplate.querySelector(".element").cloneNode(true);
+  const elementLikeButton = element.querySelector(".element__like-button");
   element.id = item._id;
   element.querySelector(".element__image").src = item.link;
   element.querySelector(".element__image").alt = item.name;
@@ -62,18 +60,24 @@ export function renderCard(item, userMe) {
   });
   element.querySelector(".element__title").textContent = item.name;
   const elementLikeCount = element.querySelector(".element__like-count");
-  // if (item.likes.length > 0) {
-  //   elementLikeCount.textContent = item.likes.length;
-  // }
-  // else {
-  //   elementLikeCount.textContent = '' 
-  // }
-  // if (userMe._id === item.owner._id) {
-  //   const elementRemoveButton = element.querySelector(
-  //     ".element__remove-button"
-  //   );
-  //   elementRemoveButton.classList.add("element__remove-button_active");
-  // }
+   
+  if (item.likes.length > 0) {
+    elementLikeCount.textContent = item.likes.length;
+    item.likes.forEach(user => {
+       if(user._id === userMe._id) {
+        elementLikeButton.classList.toggle("element__like-button_active");
+       }
+    });
+  }
+  else {
+    elementLikeCount.textContent = '' 
+  }
+  if (userMe._id === item.owner._id) {
+    const elementRemoveButton = element.querySelector(
+      ".element__remove-button"
+    );
+    elementRemoveButton.classList.add("element__remove-button_active");
+  }
   likeCard(element);
   removeCard(element);
   return element;

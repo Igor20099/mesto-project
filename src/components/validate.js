@@ -108,6 +108,7 @@ export function enableValidation(settings) {
   });
 }
 
+//Очистить валидацию
 export function clearValidation(formElement) {
   const inputList = Array.from(formElement.querySelectorAll(".popup__input"));
   const errorMessages = Array.from(

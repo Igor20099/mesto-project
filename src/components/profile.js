@@ -8,6 +8,7 @@ export const profileEditButton = profile.querySelector(".profile__edit-button");
 export const profileAddButton = profile.querySelector(".profile__add-button");
 export const profileEditAvatarButton = profile.querySelector('.profile__edit-image-button')
 
+//Получаем свои данные
 getUserMe().then(userMe => {
     profile.id = userMe._id;
     profileName.textContent = userMe.name;
