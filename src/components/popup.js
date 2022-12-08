@@ -15,7 +15,7 @@ import {
   profileAddButton,
 } from "./profile";
 
-import { enableValidation } from "./validate";
+import { editProfileInfo, addCard } from "./api";
 
 //popup edit profile
 export const popupEditProfile = document.querySelector(".popup_edit-profile");
@@ -84,6 +84,7 @@ export function editFormSubmitHandler(evt) {
   const aboutValue = popupAboutInput.value;
   profileName.textContent = nameValue;
   profileAbout.textContent = aboutValue;
+  editProfileInfo(nameValue,aboutValue)
   closePopup(popupEditProfile);
 }
 
@@ -98,6 +99,7 @@ export function addFormSubmitHandler(evt) {
   elementContainer.prepend(renderCard(card));
   popupAddNameInput.value = "";
   popupLinkImageInput.value = "";
+  addCard(addNameValue,linkImageValue)
   closePopup(popupAddCard);
 }
 

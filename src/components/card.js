@@ -5,6 +5,9 @@ import {
   popupFullsizeImage,
   openPopup,
 } from "./popup";
+
+import { deleteCard } from "./api";
+
 export const elementContainer = document.querySelector(".elements");
 export const elementTemplate = document.querySelector("#element").content;
 export const elementlikeButton = document.querySelector(
@@ -23,13 +26,15 @@ export function likeCard(element) {
 export function removeCard(element) {
   const elementRemoveButton = element.querySelector(".element__remove-button");
   elementRemoveButton.addEventListener("click", () => {
+    deleteCard(element.id)
     element.remove();
   });
 }
 
 //функция отображения карточки
-export function renderCard(item) {
+export function renderCard(item, userMe) {
   const element = elementTemplate.querySelector(".element").cloneNode(true);
+  element.id = item._id;
   element.querySelector(".element__image").src = item.link;
   element.querySelector(".element__image").alt = item.name;
   element.querySelector(".element__image").addEventListener("click", () => {
@@ -39,6 +44,16 @@ export function renderCard(item) {
     openPopup(popupFullsizeImage);
   });
   element.querySelector(".element__title").textContent = item.name;
+  const elementLikeCount = element.querySelector(".element__like-count");
+  if (item.likes.length > 0) {
+    elementLikeCount.textContent = item.likes.length;
+  }
+  if (userMe._id === item.owner._id) {
+    const elementRemoveButton = element.querySelector(
+      ".element__remove-button"
+    );
+    elementRemoveButton.classList.add("element__remove-button_active");
+  }
   likeCard(element);
   removeCard(element);
   return element;

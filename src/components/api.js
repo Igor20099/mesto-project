@@ -26,3 +26,32 @@ export function getInitialCards() {
     }
   })
 }
+
+export function editProfileInfo(name,about) {
+  return fetch(`${config.baseUrl}/users/me`, {
+    method:'PATCH',
+    headers: config.headers,
+    body: JSON.stringify({
+      name: name,
+      about: about
+    })
+  })
+}
+
+export function addCard(name, link) {
+  return fetch(`${config.baseUrl}/cards`, {
+    method:'POST',
+    headers: config.headers,
+    body: JSON.stringify({
+      name: name,
+      link: link
+    })
+  })
+}
+
+export function deleteCard(cardId) {
+  return fetch(`${config.baseUrl}/cards/${cardId}`, {
+    method:'DELETE',
+    headers: config.headers,
+  })
+}

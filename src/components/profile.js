@@ -13,3 +13,4 @@ getUserMe().then(userMe => {
     profileAbout.textContent = userMe.about;
     profileAvatar.src = userMe.avatar
  })
+

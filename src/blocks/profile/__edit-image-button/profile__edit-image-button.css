@@ -1,0 +1,22 @@
+.profile__edit-image-button {
+    position: absolute;
+    background-color: transparent;
+    width: 120px;
+    height: 120px;
+    top:0;
+    left:0;
+    border-radius: 50%;
+    margin-top: 8px;
+    object-fit: cover;
+   
+    border: 0;
+    cursor: pointer;
+    transition: .2s ease-in-out;
+}
+
+.profile__edit-image-button:hover {
+    background-color: rgba(1,1,1,.8);
+    background-image: url('../../../images/edit-profile.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+}

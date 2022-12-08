@@ -16,7 +16,11 @@
     <main class="content">
         <!--Profile-->
         <section class="profile content__profile">
-            <img src="<%=require('./images/avatar.jpg')%>" alt="Жак-Ив Кусто" class="profile__image">
+            <div class="profile__image-wrapper">
+                <img src="<%=require('./images/avatar.jpg')%>" alt="Жак-Ив Кусто" class="profile__image">
+                <button type="button" class="profile__edit-image-button"></button>
+            </div>
+           
             <div class="profile__info">
                 <h1 class="profile__name">Жак-Ив Кусто</h1>
                 <button type="button" class="profile__edit-button"></button>
@@ -32,7 +36,11 @@
                     <button type="button" class="element__remove-button"></button>
                     <div class="element__wrapper">
                         <h2 class="element__title">Карачаевск</h2>
-                        <button type="button" class="element__like-button"></button>
+                        <div class="element__like-wrapper">
+                            <button type="button" class="element__like-button"></button>
+                            <p class="element__like-count"></p>
+                        </div>
+                        
                     </div>
                 </div>
             </template>

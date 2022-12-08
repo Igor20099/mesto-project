@@ -49,14 +49,11 @@ import {
 
 import {getUserMe, getInitialCards} from "./api"
 
+Promise.all([getUserMe(),getInitialCards()]).then(([userMe, cards]) => cards.forEach(card => {
+  console.log(card)
+  elementContainer.prepend(renderCard(card,userMe));
+}))
 
-
-//Инициализация карточек с сервера
-getInitialCards().then(initialCards => {
-  initialCards.forEach(card => {
-    elementContainer.prepend(renderCard(card));
-  })
-})
 
 //Открытие popupEditProfile
 profileEditButton.addEventListener("click", () => {
