@@ -19,16 +19,11 @@ export function likeCard(element) {
     elementLikeButton.classList.toggle("element__like-button_active");
     if (elementLikeButton.classList.contains("element__like-button_active")) {
       addLikeCard(element.id).then((card) => {
-     
-          elementLikeCount.textContent = card.likes.length;
-     
+        elementLikeCount.textContent = card.likes.length;
       });
     } else {
       deleteLikeCard(element.id).then((card) => {
- 
-          elementLikeCount.textContent = card.likes.length;
-       
-        
+        elementLikeCount.textContent = card.likes.length;
       });
     }
   });
@@ -58,15 +53,13 @@ export function renderCard(item, userMe) {
   });
   element.querySelector(".element__title").textContent = item.name;
   const elementLikeCount = element.querySelector(".element__like-count");
-   
- 
-    elementLikeCount.textContent = item.likes.length;
-    item.likes.forEach(user => {
-       if(user._id === userMe._id) {
-        elementLikeButton.classList.toggle("element__like-button_active");
-       }
-    });
 
+  elementLikeCount.textContent = item.likes.length;
+  item.likes.forEach((user) => {
+    if (user._id === userMe._id) {
+      elementLikeButton.classList.toggle("element__like-button_active");
+    }
+  });
 
   if (userMe._id === item.owner._id) {
     const elementRemoveButton = element.querySelector(
