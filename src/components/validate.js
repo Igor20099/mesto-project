@@ -109,25 +109,25 @@ export function enableValidation(settings) {
 }
 
 //Очистить валидацию
-export function clearValidation(formElement) {
-  const inputList = Array.from(formElement.querySelectorAll(".popup__input"));
+export function clearValidation(formElement,settings) {
+  const inputList = Array.from(formElement.querySelectorAll(settings.inputSelector));
   const errorMessages = Array.from(
-    formElement.querySelectorAll(".popup__input-error")
+    formElement.querySelectorAll(settings.errorMessage)
   );
-  const buttonElement = formElement.querySelector(".popup__save-button");
+  const buttonElement = formElement.querySelector(settings.submitButtonSelector);
   inputList.forEach((inputElement) => {
-    if (inputElement.classList.contains("popup__input_type_error")) {
-      inputElement.classList.remove("popup__input_type_error");
+    if (inputElement.classList.contains(settings.inputErrorClass)) {
+      inputElement.classList.remove(settings.inputErrorClass);
       toggleButtonState(
         inputList,
         buttonElement,
-        "popup__save-button_inactive"
+        settings.inactiveButtonClass
       );
     }
   });
   errorMessages.forEach((errorMessage) => {
-    if (errorMessage.classList.contains("popup__input-error_active")) {
-      errorMessage.classList.remove("popup__input-error_active");
+    if (errorMessage.classList.contains(settings.errorClass)) {
+      errorMessage.classList.remove(settings.errorClass);
     }
   });
 }

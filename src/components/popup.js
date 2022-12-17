@@ -1,9 +1,3 @@
-import { elementContainer, renderCard } from "./card";
-
-import { profileName, profileAbout, profileAvatar } from "./profile";
-
-import { editProfileInfo, addCard, changeAvatar,getUserMe } from "./api";
-
 //popup edit profile
 export const popupEditProfile = document.querySelector(".popup_edit-profile");
 export const popupEditForm = popupEditProfile.querySelector(".popup__form");
@@ -81,54 +75,4 @@ export function closePopup(popup) {
   document.removeEventListener("keydown", closeByEscape);
 }
 
-//Функция обработки editForm
-export function editFormSubmitHandler(evt) {
-  evt.preventDefault();
-  popupEditSaveButton.textContent = "Сохранение...";
-  const nameValue = popupNameInput.value;
-  const aboutValue = popupAboutInput.value;
-  profileName.textContent = nameValue;
-  profileAbout.textContent = aboutValue;
-  editProfileInfo(nameValue, aboutValue).finally(() => {
-    popupEditSaveButton.textContent = "Сохранить";
-  });
 
-  closePopup(popupEditProfile);
-}
-
-//Функция обработки EditAvatar
-export function editAvatarSubmitHandler(evt) {
-  evt.preventDefault();
-  popupEditAvatarSaveButton.textContent = "Сохранение...";
-  const linkAvatar = popupAvatarLinkImage.value;
-  changeAvatar(linkAvatar)
-    .then((userMe) => {
-      console.log(linkAvatar);
-      profileAvatar.src = userMe.avatar;
-      profileAvatar.alt = userMe.avatar;
-    })
-    .finally(() => {
-      popupEditAvatarSaveButton.textContent = "Сохранить";
-    });
-
-  closePopup(popupEditAvatar);
-}
-
-//Функция обработки AddForm
-export function addFormSubmitHandler(evt) {
-  evt.preventDefault();
-  popupAddSaveButton.textContent = "Создание...";
- 
-
-  Promise.all([getUserMe(), addCard(popupAddNameInput.value,  popupLinkImageInput.value)])
-    .then(([userMe, card]) => {
-    popupAddNameInput.value = "";
-    popupLinkImageInput.value = "";
-      elementContainer.prepend(renderCard(card, userMe))
-    })
-    .finally(() => {
-      popupAddSaveButton.textContent = "Создать";
-      closePopup(popupAddCard);
-    });
-
-}

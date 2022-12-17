@@ -56,12 +56,12 @@ export function renderCard(item, userMe) {
 
   elementLikeCount.textContent = item.likes.length;
   item.likes.forEach((user) => {
-    if (user._id === userMe._id) {
+    if (user._id === userMe.id) {
       elementLikeButton.classList.toggle("element__like-button_active");
     }
   });
 
-  if (userMe._id === item.owner._id) {
+  if (userMe.id === item.owner._id) {
     const elementRemoveButton = element.querySelector(
       ".element__remove-button"
     );
