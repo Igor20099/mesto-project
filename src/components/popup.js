@@ -51,7 +51,7 @@ export const popupEditAvatarCloseButton = popupEditAvatar.querySelector(
 export const popupEditAvatarSaveButton = popupEditAvatar.querySelector(
   ".popup__save-button"
 );
-const popupAvatarLinkImage = popupEditAvatar.querySelector(
+export const popupAvatarLinkImage = popupEditAvatar.querySelector(
   ".popup__edit-input_type_avatar"
 );
 

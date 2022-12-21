@@ -84,7 +84,7 @@ export function setEventListeners(
 ) {
   const inputList = Array.from(formSelector.querySelectorAll(inputSelector));
   const buttonElement = formSelector.querySelector(submitButtonSelector);
-  toggleButtonState(inputList, buttonElement,inactiveButtonClass);
+  toggleButtonState(inputList, buttonElement, inactiveButtonClass);
   inputList.forEach((inputElement) => {
     inputElement.addEventListener("input", () => {
       isValid(formSelector, inputElement, inputErrorClass, errorClass);
@@ -109,20 +109,16 @@ export function enableValidation(settings) {
 }
 
 //Очистить валидацию
-export function clearValidation(formElement,settings) {
-  const inputList = Array.from(formElement.querySelectorAll(settings.inputSelector));
+export function clearValidation(formElement, settings) {
+  const inputList = Array.from(
+    formElement.querySelectorAll(settings.inputSelector)
+  );
   const errorMessages = Array.from(
     formElement.querySelectorAll(settings.errorMessage)
   );
-  const buttonElement = formElement.querySelector(settings.submitButtonSelector);
   inputList.forEach((inputElement) => {
     if (inputElement.classList.contains(settings.inputErrorClass)) {
       inputElement.classList.remove(settings.inputErrorClass);
-      toggleButtonState(
-        inputList,
-        buttonElement,
-        settings.inactiveButtonClass
-      );
     }
   });
   errorMessages.forEach((errorMessage) => {

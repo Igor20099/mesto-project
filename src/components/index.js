@@ -1,5 +1,5 @@
 import "../pages/index.css";
-import { elementContainer, renderCard } from "./card";
+import { elementContainer, likeCard, renderCard } from "./card";
 
 import {
   popupEditProfile,
@@ -19,7 +19,9 @@ import {
   popupAddSaveButton,
   popupEditSaveButton,
   popupEditAvatar,
+  popupAvatarLinkImage,
   popupEditAvatarCloseButton,
+  popupEditAvatarSaveButton,
 } from "./popup";
 
 import {
@@ -32,24 +34,60 @@ import {
   profileAvatar,
 } from "./profile";
 
-import { enableValidation, clearValidation } from "./validate";
+import {
+  enableValidation,
+  clearValidation,
+  toggleButtonState,
+} from "./validate";
 
-import { editProfileInfo, addCard, getUserMe, getInitialCards } from "./api";
+import {
+  editProfileInfo,
+  addCard,
+  getUserMe,
+  getInitialCards,
+  changeAvatar,
+  addLikeCard,
+  deleteLikeCard,
+} from "./api";
 
-//Получаем свои данные
-getUserMe().then(userMe => {
-  profile.id = userMe._id;
-  profileName.textContent = userMe.name;
-  profileAbout.textContent = userMe.about;
-  profileAvatar.src = userMe.avatar
-})
-
-//Инициализируем карточки с сервера
-getInitialCards().then(( cards) => {
-  cards.forEach((card) => {
-    elementContainer.append(renderCard(card, profile));
+Promise.all([getUserMe(), getInitialCards()])
+  .then(([userMe, cards]) => {
+    profile.id = userMe._id;
+    profileName.textContent = userMe.name;
+    profileAbout.textContent = userMe.about;
+    profileAvatar.src = userMe.avatar;
+    cards.forEach((card) => {
+      const elementCard = renderCard(card, profile);
+      const elementLikeButton = elementCard.querySelector(
+        ".element__like-button"
+      );
+      elementLikeButton.addEventListener("click", () => {
+        if (
+          !elementLikeButton.classList.contains("element__like-button_active")
+        ) {
+          addLikeCard(card._id)
+            .then((card) => {
+              likeCard(elementCard, card.likes, profile);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        } else {
+          deleteLikeCard(card._id)
+            .then((card) => {
+              likeCard(elementCard, card.likes, profile);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+      });
+      elementContainer.append(elementCard);
+    });
+  })
+  .catch((err) => {
+    console.log(err);
   });
-});
 
 //Функция обработки editForm
 export function editFormSubmitHandler(evt) {
@@ -76,29 +114,33 @@ export function editAvatarSubmitHandler(evt) {
       console.log(linkAvatar);
       profileAvatar.src = userMe.avatar;
       profileAvatar.alt = userMe.avatar;
+      closePopup(popupEditAvatar);
+    })
+    .catch((err) => {
+      console.log(err);
     })
     .finally(() => {
       popupEditAvatarSaveButton.textContent = "Сохранить";
     });
-
-  closePopup(popupEditAvatar);
 }
 
 //Функция обработки AddForm
 export function addFormSubmitHandler(evt) {
   evt.preventDefault();
   popupAddSaveButton.textContent = "Создание...";
-  addCard(popupAddNameInput.value,  popupLinkImageInput.value)
+  addCard(popupAddNameInput.value, popupLinkImageInput.value)
     .then((card) => {
-    popupAddNameInput.value = "";
-    popupLinkImageInput.value = "";
-      elementContainer.prepend(renderCard(card, profile))
+      popupAddNameInput.value = "";
+      popupLinkImageInput.value = "";
+      elementContainer.prepend(renderCard(card, profile));
+      closePopup(popupAddCard);
+    })
+    .catch((err) => {
+      console.log(err);
     })
     .finally(() => {
       popupAddSaveButton.textContent = "Создать";
-      closePopup(popupAddCard);
     });
-
 }
 
 //Открытие popupEditProfile
@@ -113,13 +155,9 @@ profileEditButton.addEventListener("click", () => {
   });
   popupNameInput.value = profileName.textContent;
   popupAboutInput.value = profileAbout.textContent;
-  if (popupNameInput.value === "" && popupAboutInput.value === "") {
-    popupEditSaveButton.classList.add("popup__save-button_inactive");
-    popupEditSaveButton.disabled = true;
-  } else {
-    popupEditSaveButton.classList.remove("popup__save-button_inactive");
-    popupEditSaveButton.disabled = false;
-  }
+  popupEditSaveButton.disable = false;
+  popupEditSaveButton.classList.remove("popup__save-button_inactive");
+
   openPopup(popupEditProfile);
 });
 
@@ -146,17 +184,8 @@ popupEditAvatar.addEventListener("submit", editAvatarSubmitHandler);
 
 //Открытие popupAddCard
 profileAddButton.addEventListener("click", () => {
-  if (
-    (popupAddNameInput.value === "" && popupLinkImageInput.value === "") ||
-    !popupLinkImageInput.validity.valid ||
-    !popupAddNameInput.validity.valid
-  ) {
-    popupAddSaveButton.classList.add("popup__save-button_inactive");
-    popupAddSaveButton.disabled = true;
-  } else {
-    popupAddSaveButton.classList.remove("popup__save-button_inactive");
-    popupAddSaveButton.disabled = false;
-  }
+  popupAddSaveButton.disable = true;
+  popupAddSaveButton.classList.add("popup__save-button_inactive");
   openPopup(popupAddCard);
 });
 

@@ -12,29 +12,32 @@ export const elementContainer = document.querySelector(".elements");
 export const elementTemplate = document.querySelector("#element").content;
 
 //функция лайка карточки
-export function likeCard(element) {
+export function likeCard(element, likeCount, userMe) {
   const elementLikeButton = element.querySelector(".element__like-button");
   const elementLikeCount = element.querySelector(".element__like-count");
-  elementLikeButton.addEventListener("click", () => {
-    elementLikeButton.classList.toggle("element__like-button_active");
-    if (elementLikeButton.classList.contains("element__like-button_active")) {
-      addLikeCard(element.id).then((card) => {
-        elementLikeCount.textContent = card.likes.length;
-      });
-    } else {
-      deleteLikeCard(element.id).then((card) => {
-        elementLikeCount.textContent = card.likes.length;
-      });
-    }
-  });
+  if (likeCount.length > 0) {
+    likeCount.forEach((user) => {
+      if (user._id === userMe.id) {
+        elementLikeButton.classList.add("element__like-button_active");
+      } else {
+        elementLikeButton.classList.remove("element__like-button_active");
+      }
+    });
+  } else {
+    elementLikeButton.classList.remove("element__like-button_active");
+  }
+  elementLikeCount.textContent = likeCount.length; 
 }
 
 //функция удаление карточки
 export function removeCard(element) {
   const elementRemoveButton = element.querySelector(".element__remove-button");
   elementRemoveButton.addEventListener("click", () => {
-    deleteCard(element.id);
-    element.remove();
+    deleteCard(element.id)
+      .then(() => element.remove())
+      .catch((err) => {
+        console.log(err);
+      });
   });
 }
 
@@ -52,14 +55,6 @@ export function renderCard(item, userMe) {
     openPopup(popupFullsizeImage);
   });
   element.querySelector(".element__title").textContent = item.name;
-  const elementLikeCount = element.querySelector(".element__like-count");
-
-  elementLikeCount.textContent = item.likes.length;
-  item.likes.forEach((user) => {
-    if (user._id === userMe.id) {
-      elementLikeButton.classList.toggle("element__like-button_active");
-    }
-  });
 
   if (userMe.id === item.owner._id) {
     const elementRemoveButton = element.querySelector(
@@ -67,7 +62,7 @@ export function renderCard(item, userMe) {
     );
     elementRemoveButton.classList.add("element__remove-button_active");
   }
-  likeCard(element);
+  likeCard(element, item.likes, userMe);
   removeCard(element);
   return element;
 }
