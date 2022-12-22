@@ -6,7 +6,7 @@ import {
   openPopup,
 } from "./popup";
 
-import { addLikeCard, deleteCard, deleteLikeCard } from "./api";
+import { deleteCardHandler, addLikeHandler, deleteLikeHandler } from "./index";
 
 export const elementContainer = document.querySelector(".elements");
 export const elementTemplate = document.querySelector("#element").content;
@@ -26,32 +26,21 @@ export function likeCard(element, likeCount, userMe) {
   } else {
     elementLikeButton.classList.remove("element__like-button_active");
   }
-  elementLikeCount.textContent = likeCount.length; 
-}
-
-//функция удаление карточки
-export function removeCard(element) {
-  const elementRemoveButton = element.querySelector(".element__remove-button");
-  elementRemoveButton.addEventListener("click", () => {
-    deleteCard(element.id)
-      .then(() => element.remove())
-      .catch((err) => {
-        console.log(err);
-      });
-  });
+  elementLikeCount.textContent = likeCount.length;
 }
 
 //функция отображения карточки
-export function renderCard(item, userMe) {
+export function renderCard(item, userMe,) {
   const element = elementTemplate.querySelector(".element").cloneNode(true);
   const elementLikeButton = element.querySelector(".element__like-button");
+  const elementImage = element.querySelector(".element__image");
   element.id = item._id;
-  element.querySelector(".element__image").src = item.link;
-  element.querySelector(".element__image").alt = item.name;
-  element.querySelector(".element__image").addEventListener("click", () => {
-    popupImage.src = element.querySelector(".element__image").src;
-    popupImage.alt = element.querySelector(".element__image").alt;
-    popupImageTitle.textContent = element.querySelector(".element__image").alt;
+  elementImage.src = item.link;
+  elementImage.alt = item.name;
+  elementImage.addEventListener("click", () => {
+    popupImage.src = elementImage.src;
+    popupImage.alt = elementImage.alt;
+    popupImageTitle.textContent = elementImage.alt;
     openPopup(popupFullsizeImage);
   });
   element.querySelector(".element__title").textContent = item.name;
@@ -61,8 +50,18 @@ export function renderCard(item, userMe) {
       ".element__remove-button"
     );
     elementRemoveButton.classList.add("element__remove-button_active");
+    elementRemoveButton.addEventListener('click', () => {
+      deleteCardHandler(element)
+    })
   }
+  elementLikeButton.addEventListener('click', () => {
+    if(!elementLikeButton.classList.contains('element__like-button_active')) {
+      addLikeHandler(element,item, userMe)
+    }
+    else {
+      deleteLikeHandler(element,item, userMe)
+    }
+  })
   likeCard(element, item.likes, userMe);
-  removeCard(element);
   return element;
 }

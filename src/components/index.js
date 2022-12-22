@@ -48,7 +48,18 @@ import {
   changeAvatar,
   addLikeCard,
   deleteLikeCard,
+  deleteCard,
 } from "./api";
+
+const settings = {
+  formSelector: ".popup__form",
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__save-button",
+  inactiveButtonClass: "popup__save-button_inactive",
+  inputErrorClass: "popup__input_type_error",
+  errorClass: "popup__input-error_active",
+  errorMessage: ".popup__input-error",
+};
 
 Promise.all([getUserMe(), getInitialCards()])
   .then(([userMe, cards]) => {
@@ -58,30 +69,6 @@ Promise.all([getUserMe(), getInitialCards()])
     profileAvatar.src = userMe.avatar;
     cards.forEach((card) => {
       const elementCard = renderCard(card, profile);
-      const elementLikeButton = elementCard.querySelector(
-        ".element__like-button"
-      );
-      elementLikeButton.addEventListener("click", () => {
-        if (
-          !elementLikeButton.classList.contains("element__like-button_active")
-        ) {
-          addLikeCard(card._id)
-            .then((card) => {
-              likeCard(elementCard, card.likes, profile);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        } else {
-          deleteLikeCard(card._id)
-            .then((card) => {
-              likeCard(elementCard, card.likes, profile);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        }
-      });
       elementContainer.append(elementCard);
     });
   })
@@ -89,18 +76,52 @@ Promise.all([getUserMe(), getInitialCards()])
     console.log(err);
   });
 
+export function addLikeHandler(elementCard, card, profile) {
+  addLikeCard(card._id)
+    .then((card) => {
+      likeCard(elementCard, card.likes, profile);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+export function deleteLikeHandler(elementCard, card, profile) {
+  deleteLikeCard(card._id)
+    .then((card) => {
+      likeCard(elementCard, card.likes, profile);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+ export function deleteCardHandler(element) {
+  deleteCard(element.id)
+    .then(() => element.remove())
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
 //Функция обработки editForm
 export function editFormSubmitHandler(evt) {
   evt.preventDefault();
   popupEditSaveButton.textContent = "Сохранение...";
+  console.log("ok");
   const nameValue = popupNameInput.value;
   const aboutValue = popupAboutInput.value;
-  profileName.textContent = nameValue;
-  profileAbout.textContent = aboutValue;
-  editProfileInfo(nameValue, aboutValue).finally(() => {
-    popupEditSaveButton.textContent = "Сохранить";
-  });
-
+  editProfileInfo(nameValue, aboutValue)
+    .then(() => {
+      profileName.textContent = nameValue;
+      profileAbout.textContent = aboutValue;
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      popupEditSaveButton.textContent = "Сохранить";
+    });
   closePopup(popupEditProfile);
 }
 
@@ -145,19 +166,11 @@ export function addFormSubmitHandler(evt) {
 
 //Открытие popupEditProfile
 profileEditButton.addEventListener("click", () => {
-  clearValidation(popupEditForm, {
-    inputSelector: ".popup__input",
-    errorMessage: ".popup__input-error",
-    submitButtonSelector: ".popup__save-button",
-    inactiveButtonClass: "popup__save-button_inactive",
-    inputErrorClass: "popup__input_type_error",
-    errorClass: "popup__input-error_active",
-  });
+  clearValidation(popupEditForm, settings);
   popupNameInput.value = profileName.textContent;
   popupAboutInput.value = profileAbout.textContent;
   popupEditSaveButton.disable = false;
   popupEditSaveButton.classList.remove("popup__save-button_inactive");
-
   openPopup(popupEditProfile);
 });
 
@@ -216,11 +229,4 @@ document.addEventListener("click", (evt) => {
 });
 
 // Включение валидации
-enableValidation({
-  formSelector: ".popup__form",
-  inputSelector: ".popup__input",
-  submitButtonSelector: ".popup__save-button",
-  inactiveButtonClass: "popup__save-button_inactive",
-  inputErrorClass: "popup__input_type_error",
-  errorClass: "popup__input-error_active",
-});
+enableValidation(settings);
