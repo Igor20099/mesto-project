@@ -30,10 +30,11 @@ export function likeCard(element, likeCount, userMe) {
 }
 
 //функция отображения карточки
-export function renderCard(item, userMe,) {
+export function renderCard(item, userMe) {
   const element = elementTemplate.querySelector(".element").cloneNode(true);
   const elementLikeButton = element.querySelector(".element__like-button");
   const elementImage = element.querySelector(".element__image");
+  const elementTitle = element.querySelector(".element__title");
   element.id = item._id;
   elementImage.src = item.link;
   elementImage.alt = item.name;
@@ -43,25 +44,24 @@ export function renderCard(item, userMe,) {
     popupImageTitle.textContent = elementImage.alt;
     openPopup(popupFullsizeImage);
   });
-  element.querySelector(".element__title").textContent = item.name;
+  elementTitle.textContent = item.name;
 
   if (userMe.id === item.owner._id) {
     const elementRemoveButton = element.querySelector(
       ".element__remove-button"
     );
     elementRemoveButton.classList.add("element__remove-button_active");
-    elementRemoveButton.addEventListener('click', () => {
-      deleteCardHandler(element)
-    })
+    elementRemoveButton.addEventListener("click", () => {
+      deleteCardHandler(element);
+    });
   }
-  elementLikeButton.addEventListener('click', () => {
-    if(!elementLikeButton.classList.contains('element__like-button_active')) {
-      addLikeHandler(element,item, userMe)
+  elementLikeButton.addEventListener("click", () => {
+    if (!elementLikeButton.classList.contains("element__like-button_active")) {
+      addLikeHandler(element, item, userMe);
+    } else {
+      deleteLikeHandler(element, item, userMe);
     }
-    else {
-      deleteLikeHandler(element,item, userMe)
-    }
-  })
+  });
   likeCard(element, item.likes, userMe);
   return element;
 }
