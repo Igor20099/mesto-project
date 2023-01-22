@@ -1,3 +1,40 @@
+export default class Popup {
+  constructor(popupSelector) {
+    this._popupSelector = popupSelector;
+  }
+
+  open (popup) {
+      popup.classList.add("popup_opened");
+      document.addEventListener("keydown", this._handleEscClose);
+  }
+
+  close (popup) {
+    popup.classList.remove("popup_opened");
+    document.removeEventListener("keydown", this._handleEscClose);
+  }
+
+  _handleEscClose(evt) {
+    if (evt.key === "Escape") {
+      const openedPopup = document.querySelector(".popup_opened");
+      closePopup(openedPopup);
+    }
+  }
+
+  setEventListeners(evt) {
+    const popup = document.querySelector(this._popupSelector);
+    const popupCloseButton = popup.querySelector('.popup__close-button');
+    popupCloseButton.addEventListener('click', () => this.close(popup));
+
+    popup.addEventListener('click', () => this._handleOverlayClose(evt));
+  }
+
+  _handleOverlayClose (evt) {
+    if (evt.target === evt.currentTarget) {
+      this.close();
+    }
+  }
+}
+
 //popup edit profile
 export const popupEditProfile = document.querySelector(".popup_edit-profile");
 export const popupEditForm = popupEditProfile.querySelector(".popup__form");
@@ -63,13 +100,19 @@ export function closeByEscape(evt) {
   }
 }
 
-//функция открытия popup
+//функция открытия popup (###)
 export function openPopup(popup) {
   popup.classList.add("popup_opened");
   document.addEventListener("keydown", closeByEscape);
 }
 
-//функция закрытия popup
+//функция закрытия popup (###)
+export function openPopup(popup) {
+  popup.classList.add("popup_opened");
+  document.addEventListener("keydown", closeByEscape);
+}
+
+//функция закрытия popup (###)
 export function closePopup(popup) {
   popup.classList.remove("popup_opened");
   document.removeEventListener("keydown", closeByEscape);

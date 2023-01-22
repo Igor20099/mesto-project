@@ -1,5 +1,5 @@
 import "../pages/index.css";
-import { elementContainer, likeCard, renderCard } from "./Card";
+import { elementContainer, likeCard, renderCard } from "../components/Card";
 
 import {
   popupEditProfile,
@@ -22,7 +22,7 @@ import {
   popupAvatarLinkImage,
   popupEditAvatarCloseButton,
   popupEditAvatarSaveButton,
-} from "./Popup";
+} from "../components/Popup";
 
 import {
   profile,
@@ -38,7 +38,7 @@ import {
   enableValidation,
   clearValidation,
   toggleButtonState,
-} from "./validate";
+} from "../components/FormValidator";
 
 import {
   editProfileInfo,
@@ -49,7 +49,7 @@ import {
   addLikeCard,
   deleteLikeCard,
   deleteCard,
-} from "./Api";
+} from "../components/Api";
 
 const settings = {
   formSelector: ".popup__form",
@@ -216,17 +216,17 @@ popupFullSizeImageCloseButton.addEventListener("click", () => {
 });
 
 //Закрытие popup по клику на оверлей
-document.addEventListener("click", (evt) => {
-  if (evt.target === popupEditProfile) {
-    closePopup(popupEditProfile);
-  } else if (evt.target === popupAddCard) {
-    closePopup(popupAddCard);
-  } else if (evt.target === popupFullsizeImage) {
-    closePopup(popupFullsizeImage);
-  } else if (evt.target === popupEditAvatar) {
-    closePopup(popupEditAvatar);
-  }
-});
+// document.addEventListener("click", (evt) => {
+//   if (evt.target === popupEditProfile) {
+//     closePopup(popupEditProfile);
+//   } else if (evt.target === popupAddCard) {
+//     closePopup(popupAddCard);
+//   } else if (evt.target === popupFullsizeImage) {
+//     closePopup(popupFullsizeImage);
+//   } else if (evt.target === popupEditAvatar) {
+//     closePopup(popupEditAvatar);
+//   }
+// });
 
 // Включение валидации
 enableValidation(settings);
