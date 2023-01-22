@@ -1,5 +1,5 @@
 import "../pages/index.css";
-import { elementContainer, likeCard, renderCard } from "./card";
+import { elementContainer, likeCard, renderCard } from "./Card";
 
 import {
   popupEditProfile,
@@ -22,7 +22,7 @@ import {
   popupAvatarLinkImage,
   popupEditAvatarCloseButton,
   popupEditAvatarSaveButton,
-} from "./popup";
+} from "./Popup";
 
 import {
   profile,
@@ -49,7 +49,7 @@ import {
   addLikeCard,
   deleteLikeCard,
   deleteCard,
-} from "./api";
+} from "./Api";
 
 const settings = {
   formSelector: ".popup__form",

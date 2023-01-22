@@ -1,10 +1,33 @@
+export default class Card {
+  constructor(title, src, cardId, ownerId, selector) {
+    this._title = title;
+    this._src = src;
+    this._cardId = cardId;
+    this._ownerId = ownerId;
+    this._selector = selector;
+  }
+  
+  _getTemplate() {
+    const elementContainer = document.querySelector(this._selector);
+    const elementTemplate = elementContainer.querySelector('#element');
+    return elementTemplate
+    .content
+    .cloneNode(true);
+  }
+
+  renderCard() {
+    const card = this._getTemplate();
+
+  }
+}
+
 //card
 import {
   popupImage,
   popupImageTitle,
   popupFullsizeImage,
   openPopup,
-} from "./popup";
+} from "./Popup";
 
 import { deleteCardHandler, addLikeHandler, deleteLikeHandler } from "./index";
 

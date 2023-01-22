@@ -1,3 +1,22 @@
+class FormValidator {
+    constructor(settings, form) {
+        this._settings = settings;
+        this._form = form;
+    }
+    _showInputError(
+        form,
+        inputElement,
+        this._settings.errorMessage,
+        inputErrorClass,
+        errorClass
+      ) {
+        const errorElement = form.querySelector(`.${inputElement.id}-error`);
+        inputElement.classList.add(inputErrorClass);
+        errorElement.textContent = errorMessage;
+        errorElement.classList.add(errorClass);
+      }
+}
+
 //Показать ошибку
 export function showInputError(
   formElement,
