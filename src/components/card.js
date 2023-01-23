@@ -17,7 +17,6 @@ export default class Card {
 
   renderCard() {
     const card = this._getTemplate();
-
   }
 }
 

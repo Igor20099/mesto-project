@@ -1,4 +1,4 @@
-import "../pages/index.css";
+import "./pages/index.css";
 import { elementContainer, likeCard, renderCard } from "../components/Card";
 
 import {
