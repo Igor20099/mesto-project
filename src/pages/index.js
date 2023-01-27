@@ -1,65 +1,17 @@
 import "./pages/index.css";
-import { elementContainer, likeCard, renderCard } from "../components/Card";
+import Api from '../components/Api.js';
+import Card from '../components/Card.js';
+import FormValidator from "../components/FormValidator.js";
+import PopupWithForm from "../components/PopupWithForm.js";
+import PopupWithImage from "../components/PopupWithImage.js";
+import Section from "../components/Section.js";
+import UserInfo from "../components/UserInfo.js";
+import {settings, config} from "../utils/constants.js";
 
-import {
-  popupEditProfile,
-  popupEditForm,
-  popupNameInput,
-  popupAboutInput,
-  popupEditProfileCloseButton,
-  popupAddCard,
-  popupAddCardCloseButton,
-  popupLinkImageInput,
-  popupAddForm,
-  popupAddNameInput,
-  popupFullsizeImage,
-  popupFullSizeImageCloseButton,
-  openPopup,
-  closePopup,
-  popupAddSaveButton,
-  popupEditSaveButton,
-  popupEditAvatar,
-  popupAvatarLinkImage,
-  popupEditAvatarCloseButton,
-  popupEditAvatarSaveButton,
-} from "../components/Popup";
+const api = new Api(config);
+const userInfo = new UserInfo('.profile__name','.profile__about','.profile__image');
 
-import {
-  profile,
-  profileName,
-  profileAbout,
-  profileEditButton,
-  profileAddButton,
-  profileEditAvatarButton,
-  profileAvatar,
-} from "./profile";
 
-import {
-  enableValidation,
-  clearValidation,
-  toggleButtonState,
-} from "../components/FormValidator";
-
-import {
-  editProfileInfo,
-  addCard,
-  getUserMe,
-  getInitialCards,
-  changeAvatar,
-  addLikeCard,
-  deleteLikeCard,
-  deleteCard,
-} from "../components/Api";
-
-const settings = {
-  formSelector: ".popup__form",
-  inputSelector: ".popup__input",
-  submitButtonSelector: ".popup__save-button",
-  inactiveButtonClass: "popup__save-button_inactive",
-  inputErrorClass: "popup__input_type_error",
-  errorClass: "popup__input-error_active",
-  errorMessage: ".popup__input-error",
-};
 
 Promise.all([getUserMe(), getInitialCards()])
   .then(([userMe, cards]) => {
