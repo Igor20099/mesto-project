@@ -1,10 +1,14 @@
 export default class Card {
-  constructor(title, src, cardId, ownerId, selector) {
+  constructor({title, src, cardId, ownerId, likes}, selector, addLikeHandler, deleteLikeHandler, deleteCardHandler) {
     this._title = title;
     this._src = src;
     this._cardId = cardId;
     this._ownerId = ownerId;
+    this._likes = likes;
     this._selector = selector;
+    this._addLikeHandler = addLikeHandler;
+    this._deleteLikeHandler = deleteLikeHandler;
+    this._deleteCardHandler = deleteCardHandler;
   }
   
   _getTemplate() {
@@ -15,8 +19,36 @@ export default class Card {
     .cloneNode(true);
   }
 
-  renderCard() {
+  _likeCard() {
+    const elementLikeButton = element.querySelector(".element__like-button");
+    const elementLikeCount = element.querySelector(".element__like-count");
+    if (likeCount.length > 0) {
+      likeCount.forEach((user) => {
+        if (user._id === userMe.id) {
+          elementLikeButton.classList.add("element__like-button_active");
+        } else {
+          elementLikeButton.classList.remove("element__like-button_active");
+        }
+      });
+    } else {
+      elementLikeButton.classList.remove("element__like-button_active");
+    }
+    elementLikeCount.textContent = likeCount.length;
+  }
+
+  _setEventListeners() {
+
+  }
+
+  generate() {
     const card = this._getTemplate();
+
+    card.querySelector('.element__image').src = this._src;
+    card.querySelector('.element__image').alt = this._title;
+    card.querySelector('.element__title').textContent = this._title;
+    card.querySelector('.element__likes-count').textContent = this._likes.length;
+
+    this._setEventListeners();
   }
 }
 
