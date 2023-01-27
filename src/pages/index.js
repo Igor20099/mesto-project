@@ -1,17 +1,19 @@
-import "./pages/index.css";
-import Api from '../components/Api.js';
-import Card from '../components/Card.js';
+import "./index.css";
+import Api from "../components/Api.js";
+import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
-import {settings, config} from "../utils/constants.js";
+import { settings, config } from "../utils/constants.js";
 
 const api = new Api(config);
-const userInfo = new UserInfo('.profile__name','.profile__about','.profile__image');
-
-
+const userInfo = new UserInfo(
+  ".profile__name",
+  ".profile__about",
+  ".profile__image"
+);
 
 Promise.all([getUserMe(), getInitialCards()])
   .then(([userMe, cards]) => {
@@ -48,7 +50,7 @@ export function deleteLikeHandler(elementCard, card, profile) {
     });
 }
 
- export function deleteCardHandler(element) {
+export function deleteCardHandler(element) {
   deleteCard(element.id)
     .then(() => element.remove())
     .catch((err) => {
@@ -180,5 +182,3 @@ popupFullSizeImageCloseButton.addEventListener("click", () => {
 //   }
 // });
 
-// Включение валидации
-enableValidation(settings);
