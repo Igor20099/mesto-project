@@ -105,7 +105,7 @@ export function deleteLikeHandler(elementCard, card, profile) {
 }
 
 //Функция обработки editForm
-export function editFormSubmitHandler(evt) {
+export function editFormSubmitHandler(evt, values) {
   evt.preventDefault();
   popupEditSaveButton.textContent = "Сохранение...";
   console.log("ok");
