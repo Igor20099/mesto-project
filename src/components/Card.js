@@ -35,17 +35,11 @@ export default class Card {
   }
 
   _likeCard(isLiked) {
-    // if (this._likes.length > 0) {
-    //   this._likes.forEach((like) => {
-    //     if (like._Id === this._userId) {
-          
-    //     } else {
-          
-    //     }
-    //   });
-    // this._likeCount.textContent = this._likes.length;
-
-    isLiked ? this._likeButton.classList.add("element__like-button_active") : this._likeButton.classList.remove("element__like-button_active");
+    isLiked 
+    ? this._likeButton.classList.add("element__like-button_active")
+    : this._likeButton.classList.remove("element__like-button_active");
+    this._likeCount.textContent = this._likes.length;
+    console.log(this._likes);
   }
 
   _deleteLikeCard() {}
