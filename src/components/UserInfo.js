@@ -1,8 +1,8 @@
 export default class UserInfo {
-  constructor(name, about, avatar) {
-    this._name = name;
-    this._about = about;
-    this._avatar = avatar;
+  constructor(nameSelector, aboutSelector, avatarSelector) {
+    this._name = document.querySelector(nameSelector);
+    this._about = document.querySelector(aboutSelector);
+    this._avatar = document.querySelector(avatarSelector);
   }
 
   setUserId(id) {
@@ -34,10 +34,10 @@ export default class UserInfo {
 
 
 //profile
-export const profile = document.querySelector(".profile");
-export const profileName = profile.querySelector(".profile__name");
-export const profileAbout = profile.querySelector(".profile__about");
-export const profileAvatar = profile.querySelector(".profile__image");
-export const profileEditButton = profile.querySelector(".profile__edit-button");
-export const profileAddButton = profile.querySelector(".profile__add-button");
-export const profileEditAvatarButton = profile.querySelector('.profile__edit-image-button');
+// export const profile = document.querySelector(".profile");
+// export const profileName = profile.querySelector(".profile__name");
+// export const profileAbout = profile.querySelector(".profile__about");
+// export const profileAvatar = profile.querySelector(".profile__image");
+// export const profileEditButton = profile.querySelector(".profile__edit-button");
+// export const profileAddButton = profile.querySelector(".profile__add-button");
+// export const profileEditAvatarButton = profile.querySelector('.profile__edit-image-button');
