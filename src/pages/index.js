@@ -15,16 +15,27 @@ const userInfo = new UserInfo(
   ".profile__image"
 );
 
-Promise.all([getUserMe(), getInitialCards()])
+
+
+Promise.all([api.getUserMe(), api.getInitialCards()])
   .then(([userMe, cards]) => {
-    profile.id = userMe._id;
-    profileName.textContent = userMe.name;
-    profileAbout.textContent = userMe.about;
-    profileAvatar.src = userMe.avatar;
-    cards.forEach((card) => {
-      const elementCard = renderCard(card, profile);
-      elementContainer.append(elementCard);
-    });
+    console.log(cards)
+    userInfo.setUserId(userMe._id);
+    userInfo.setUserInfo(userMe.name, userMe.about);
+    userInfo.setUserAvatar(userMe.avatar);
+    const cardList = new Section(
+      {
+        items: cards,
+        renderer: (card) => {
+          
+          const cardElement = new Card(card, userInfo.getUserId(), ".elements");
+          cardList.addItem(cardElement.generate());
+        },
+      },
+      ".elements"
+    );
+    cardList.rendererItems();
+    
   })
   .catch((err) => {
     console.log(err);
@@ -118,56 +129,56 @@ export function addFormSubmitHandler(evt) {
     });
 }
 
-//Открытие popupEditProfile
-profileEditButton.addEventListener("click", () => {
-  clearValidation(popupEditForm, settings);
-  popupNameInput.value = profileName.textContent;
-  popupAboutInput.value = profileAbout.textContent;
-  popupEditSaveButton.disable = false;
-  popupEditSaveButton.classList.remove("popup__save-button_inactive");
-  openPopup(popupEditProfile);
-});
+// //Открытие popupEditProfile
+// profileEditButton.addEventListener("click", () => {
+//   clearValidation(popupEditForm, settings);
+//   popupNameInput.value = profileName.textContent;
+//   popupAboutInput.value = profileAbout.textContent;
+//   popupEditSaveButton.disable = false;
+//   popupEditSaveButton.classList.remove("popup__save-button_inactive");
+//   openPopup(popupEditProfile);
+// });
 
-//Закрытие popupEditProfile
-popupEditProfileCloseButton.addEventListener("click", () => {
-  closePopup(popupEditProfile);
-});
+// //Закрытие popupEditProfile
+// popupEditProfileCloseButton.addEventListener("click", () => {
+//   closePopup(popupEditProfile);
+// });
 
-//Слушатель событий для popupEditForm
-popupEditForm.addEventListener("submit", editFormSubmitHandler);
+// //Слушатель событий для popupEditForm
+// popupEditForm.addEventListener("submit", editFormSubmitHandler);
 
-//Открытие popupEditAvatar
-profileEditAvatarButton.addEventListener("click", () => {
-  openPopup(popupEditAvatar);
-});
+// //Открытие popupEditAvatar
+// profileEditAvatarButton.addEventListener("click", () => {
+//   openPopup(popupEditAvatar);
+// });
 
-//Закрытие popupEditAvatar
-popupEditAvatarCloseButton.addEventListener("click", () => {
-  closePopup(popupEditAvatar);
-});
+// //Закрытие popupEditAvatar
+// popupEditAvatarCloseButton.addEventListener("click", () => {
+//   closePopup(popupEditAvatar);
+// });
 
-//Слушатель событий для popupEditAvatar
-popupEditAvatar.addEventListener("submit", editAvatarSubmitHandler);
+// //Слушатель событий для popupEditAvatar
+// popupEditAvatar.addEventListener("submit", editAvatarSubmitHandler);
 
-//Открытие popupAddCard
-profileAddButton.addEventListener("click", () => {
-  popupAddSaveButton.disable = true;
-  popupAddSaveButton.classList.add("popup__save-button_inactive");
-  openPopup(popupAddCard);
-});
+// //Открытие popupAddCard
+// profileAddButton.addEventListener("click", () => {
+//   popupAddSaveButton.disable = true;
+//   popupAddSaveButton.classList.add("popup__save-button_inactive");
+//   openPopup(popupAddCard);
+// });
 
-//Закрытие popupAddCard
-popupAddCardCloseButton.addEventListener("click", () => {
-  closePopup(popupAddCard);
-});
+// //Закрытие popupAddCard
+// popupAddCardCloseButton.addEventListener("click", () => {
+//   closePopup(popupAddCard);
+// });
 
-//Слушатель событий для popupAddForm
-popupAddForm.addEventListener("submit", addFormSubmitHandler);
+// //Слушатель событий для popupAddForm
+// popupAddForm.addEventListener("submit", addFormSubmitHandler);
 
-//Закрытие popupFullsizeImage
-popupFullSizeImageCloseButton.addEventListener("click", () => {
-  closePopup(popupFullsizeImage);
-});
+// //Закрытие popupFullsizeImage
+// popupFullSizeImageCloseButton.addEventListener("click", () => {
+//   closePopup(popupFullsizeImage);
+// });
 
 //Закрытие popup по клику на оверлей
 // document.addEventListener("click", (evt) => {
@@ -181,4 +192,3 @@ popupFullSizeImageCloseButton.addEventListener("click", () => {
 //     closePopup(popupEditAvatar);
 //   }
 // });
-

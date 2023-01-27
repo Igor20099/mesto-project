@@ -3,6 +3,7 @@ export default class Api {
     this._baseUrl = options.baseUrl;
     this._headers = options.headers;
   }
+  
   getUserMe() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
@@ -15,7 +16,7 @@ export default class Api {
   }
 
   getInitialCards() {
-    return fetch(`${this._baseUrl}/users/me`, {
+    return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
     }).then((res) => {
       if (res.ok) {
@@ -100,14 +101,7 @@ export default class Api {
   }
 }
 
-//Конфигурация
-const config = {
-  baseUrl: "https://nomoreparties.co/v1/plus-cohort-17",
-  headers: {
-    authorization: "e9f29ecd-7473-4cd5-991b-c4f08c138626",
-    "Content-Type": "application/json",
-  },
-};
+
 
 //Получаем свои данные (###)
 // export function getUserMe() {
