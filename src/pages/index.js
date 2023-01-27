@@ -15,11 +15,9 @@ const userInfo = new UserInfo(
   ".profile__image"
 );
 
-
-
 Promise.all([api.getUserMe(), api.getInitialCards()])
   .then(([userMe, cards]) => {
-    console.log(cards)
+    console.log(cards);
     userInfo.setUserId(userMe._id);
     userInfo.setUserInfo(userMe.name, userMe.about);
     userInfo.setUserAvatar(userMe.avatar);
@@ -27,32 +25,38 @@ Promise.all([api.getUserMe(), api.getInitialCards()])
       {
         items: cards,
         renderer: (card) => {
-          
-          const cardElement = new Card(card, userInfo.getUserId(), ".elements");
+          const cardElement = new Card(
+            card,
+            userInfo.getUserId(),
+            ".elements",
+            (id, likes) => {api.addLikeCard(id,likes)},
+            (id, likes) => {api.deleteLikeCard(id,likes)},
+          );
           cardList.addItem(cardElement.generate());
         },
       },
       ".elements"
     );
     cardList.rendererItems();
-    
   })
   .catch((err) => {
     console.log(err);
   });
 
-export function addLikeHandler(elementCard, card, profile) {
-  addLikeCard(card._id)
-    .then((card) => {
-      likeCard(elementCard, card.likes, profile);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}
+// function addLikeHandler(elementCard, card, profile) {
+//   api
+//     .addLikeCard(card._id)
+//     .then((card) => {
+//       likeCard(elementCard, card.likes, profile);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// }
 
-export function deleteLikeHandler(elementCard, card, profile) {
-  deleteLikeCard(card._id)
+function deleteLikeHandler(elementCard, card, profile) {
+  api
+    .deleteLikeCard(card._id)
     .then((card) => {
       likeCard(elementCard, card.likes, profile);
     })

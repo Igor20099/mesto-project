@@ -3,8 +3,8 @@ export default class Card {
     { name, link, _id, owner, likes },
     userId,
     selector,
-    // addLikeHandler,
-    // deleteLikeHandler,
+    addLikeHandler,
+    deleteLikeHandler
     // deleteCardHandler,
     // handleCardClick
   ) {
@@ -15,11 +15,11 @@ export default class Card {
     this._ownerId = owner._id;
     this._likes = likes;
     this._selector = selector;
-    // this._addLikeHandler = addLikeHandler;
+    this._addLikeHandler = addLikeHandler;
 
     // this._deleteCardHandler = deleteCardHandler;
     // this._handleCardclick = handleCardClick;
-    // this._deleteLikeHandler = deleteLikeHandler;
+    this._deleteLikeHandler = deleteLikeHandler;
     this._card = this._getTemplate();
     this._image = this._card.querySelector(".element__image");
     this._imageTitle = this._card.querySelector(".element__title");
@@ -36,8 +36,8 @@ export default class Card {
 
   _likeCard() {
     if (this._likes.length > 0) {
-      this._likes.forEach((userId) => {
-        if (ownerId === userId) {
+      this._likes.forEach((like) => {
+        if (like._Id === this._userId) {
           this._likeButton.classList.add("element__like-button_active");
         } else {
           this._likeButton.classList.remove("element__like-button_active");
@@ -62,12 +62,13 @@ export default class Card {
 
   _setEventListeners() {
     this._likeButton.addEventListener("click", () => {
+      console.log("sss");
       if (
         !this._likeButton.classList.contains("element__like-button_active")
       ) {
-        addLikeHandler(this._card, cardId, userId);
+        this._addLikeHandler(this._cardId, this._likes);
       } else {
-        deleteLikeHandler(this._card, cardId, userId);
+        this._deleteLikeHandler(this._cardId, this._likes);
       }
       this._likeCard();
     });
@@ -84,8 +85,7 @@ export default class Card {
     this._image.alt = this._title;
     this._imageTitle.textContent = this._title;
     this._likeCount.textContent = this._likes.length;
-    // this._setEventListeners();
-    return this._card
+    this._setEventListeners();
+    return this._card;
   }
 }
-
