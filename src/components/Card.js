@@ -34,12 +34,20 @@ export default class Card {
     return elementTemplate.content.cloneNode(true);
   }
 
+  _renderLike() {
+    this._likeButton.classList.add("element__like-button_active");
+    this._likeCount.textContent = +this._likeCount.textContent + 1;
+  }
+
+  _renderUnlike() {
+    this._likeButton.classList.remove("element__like-button_active");
+    this._likeCount.textContent = +this._likeCount.textContent - 1;
+  }
+
   _likeCard(isLiked) {
     isLiked 
-    ? this._likeButton.classList.add("element__like-button_active")
-    : this._likeButton.classList.remove("element__like-button_active");
-    this._likeCount.textContent = this._likes.length;
-    console.log(this._likes);
+    ? this._renderLike()
+    : this._renderUnlike();
   }
 
   _deleteLikeCard() {}
