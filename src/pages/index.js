@@ -14,6 +14,8 @@ const userInfo = new UserInfo(
   ".profile__about",
   ".profile__image"
 );
+const popupWithAddForm = new PopupWithForm('.popup_add-card',addFormSubmitHandler)
+popupWithAddForm.setEventListeners()
 
 Promise.all([api.getUserMe(), api.getInitialCards()])
   .then(([userMe, cards]) => {
@@ -115,7 +117,7 @@ export function editAvatarSubmitHandler(evt) {
 }
 
 //Функция обработки AddForm
-export function addFormSubmitHandler(evt) {
+function addFormSubmitHandler(evt,values) {
   evt.preventDefault();
   popupAddSaveButton.textContent = "Создание...";
   addCard(popupAddNameInput.value, popupLinkImageInput.value)
@@ -164,12 +166,12 @@ export function addFormSubmitHandler(evt) {
 // //Слушатель событий для popupEditAvatar
 // popupEditAvatar.addEventListener("submit", editAvatarSubmitHandler);
 
-// //Открытие popupAddCard
-// profileAddButton.addEventListener("click", () => {
-//   popupAddSaveButton.disable = true;
-//   popupAddSaveButton.classList.add("popup__save-button_inactive");
-//   openPopup(popupAddCard);
-// });
+//Открытие popupAddCard
+profileAddButton.addEventListener("click", () => {
+  popupAddSaveButton.disable = true;
+  popupAddSaveButton.classList.add("popup__save-button_inactive");
+  openPopup(popupAddCard);
+});
 
 // //Закрытие popupAddCard
 // popupAddCardCloseButton.addEventListener("click", () => {
