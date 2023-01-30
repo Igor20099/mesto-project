@@ -104,10 +104,19 @@ const profileEditButton = profile.querySelector(".profile__edit-button");
 const profileEditAvatarButton = profile.querySelector(
   ".profile__edit-image-button"
 );
+const editForm = document.forms[0]
+const editFormValidation = new FormValidator(settings,editForm);
+const addForm = document.forms[1]
+const addFormValidation = new FormValidator(settings,addForm);
+const editAvatarForm = document.forms[2]
+const editAvatarFormValidation = new FormValidator(settings,editAvatarForm);
+
+editFormValidation.enableValidation()
+addFormValidation.enableValidation()
+editAvatarFormValidation.enableValidation()
 
 Promise.all([api.getUserMe(), api.getInitialCards()])
   .then(([userMe, cards]) => {
-    console.log(cards);
     userInfo.setUserId(userMe._id);
     userInfo.setUserInfo(userMe.name, userMe.about);
     userInfo.setUserAvatar(userMe.avatar);
