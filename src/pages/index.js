@@ -17,6 +17,7 @@ const userInfo = new UserInfo(
 const popupWithAddForm = new PopupWithForm('.popup_add-card',addFormSubmitHandler)
 const popupWithEditForm = new PopupWithForm('.popup_edit-profile', editFormSubmitHandler)
 const popupWithEditAvatorForm = new PopupWithForm('.popup_edit-avatar',editAvatarSubmitHandler)
+const popupWithImage = new PopupWithImage('.popup_fullsize-image');
 
 const profile = document.querySelector('.profile');
 const profileAddButton = profile.querySelector('.profile__add-button');
@@ -26,6 +27,7 @@ const profileEditAvatarButton = profile.querySelector('.profile__edit-image-butt
 popupWithAddForm.setEventListeners()
 popupWithEditForm.setEventListeners()
 popupWithEditAvatorForm.setEventListeners()
+popupWithImage.setEventListeners()
 
 
 Promise.all([api.getUserMe(), api.getInitialCards()])
@@ -38,12 +40,14 @@ Promise.all([api.getUserMe(), api.getInitialCards()])
       {
         items: cards,
         renderer: (card) => {
+          console.log(card)
           const cardElement = new Card(
             card,
             userInfo.getUserId(),
-            ".elements",
+            "#element",
             (id, likes) => {api.addLikeCard(id,likes)},
             (id, likes) => {api.deleteLikeCard(id,likes)},
+            () => {popupWithImage.open(card.name,card.link)}
           );
           cardList.addItem(cardElement.generate());
         },
@@ -195,17 +199,4 @@ profileAddButton.addEventListener("click", () => {
 // //Закрытие popupFullsizeImage
 // popupFullSizeImageCloseButton.addEventListener("click", () => {
 //   closePopup(popupFullsizeImage);
-// });
-
-//Закрытие popup по клику на оверлей
-// document.addEventListener("click", (evt) => {
-//   if (evt.target === popupEditProfile) {
-//     closePopup(popupEditProfile);
-//   } else if (evt.target === popupAddCard) {
-//     closePopup(popupAddCard);
-//   } else if (evt.target === popupFullsizeImage) {
-//     closePopup(popupFullsizeImage);
-//   } else if (evt.target === popupEditAvatar) {
-//     closePopup(popupEditAvatar);
-//   }
 // });
