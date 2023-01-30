@@ -38,9 +38,10 @@ const popupWithEditForm = new PopupWithForm(
     // popupEditSaveButton.textContent = "Сохранение...";
     console.log("ok");
     const nameValue = values["edit-name"];
-    console.log(nameValue)
+    console.log(nameValue);
     const aboutValue = values["edit-about"];
-    api.editProfileInfo(nameValue, aboutValue)
+    api
+      .editProfileInfo(nameValue, aboutValue)
       .then(() => {
         userInfo.setUserInfo(nameValue, aboutValue);
         popupWithEditForm.close();
@@ -51,27 +52,27 @@ const popupWithEditForm = new PopupWithForm(
       .finally(() => {
         // popupEditSaveButton.textContent = "Сохранить";
       });
-    
   }
 );
 const popupWithEditAvatorForm = new PopupWithForm(
   ".popup_edit-avatar",
-   (evt, values) => {
+  (evt, values) => {
     evt.preventDefault();
-  // popupEditAvatarSaveButton.textContent = "Сохранение...";
-  const linkAvatar = values['edit-avatar-link'];
-  api.changeAvatar(linkAvatar)
-    .then((userMe) => {
-      userInfo.setUserAvatar(userMe.avatar)
-      popupWithEditAvatorForm.close()
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-    .finally(() => {
-      // popupEditAvatarSaveButton.textContent = "Сохранить";
-    });
-   }
+    // popupEditAvatarSaveButton.textContent = "Сохранение...";
+    const linkAvatar = values["edit-avatar-link"];
+    api
+      .changeAvatar(linkAvatar)
+      .then((userMe) => {
+        userInfo.setUserAvatar(userMe.avatar);
+        popupWithEditAvatorForm.close();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        // popupEditAvatarSaveButton.textContent = "Сохранить";
+      });
+  }
 );
 const popupWithImage = new PopupWithImage(".popup_fullsize-image");
 
@@ -81,8 +82,6 @@ const profileEditButton = profile.querySelector(".profile__edit-button");
 const profileEditAvatarButton = profile.querySelector(
   ".profile__edit-image-button"
 );
-
-
 
 Promise.all([api.getUserMe(), api.getInitialCards()])
   .then(([userMe, cards]) => {
@@ -178,14 +177,6 @@ profileEditButton.addEventListener("click", () => {
   // popupEditSaveButton.classList.remove("popup__save-button_inactive");
   popupWithEditForm.open();
 });
-
-// //Закрытие popupEditProfile
-// popupEditProfileCloseButton.addEventListener("click", () => {
-//   closePopup(popupEditProfile);
-// });
-
-// //Слушатель событий для popupEditForm
-// popupEditForm.addEventListener("submit", editFormSubmitHandler);
 
 //Открытие popupEditAvatar
 profileEditAvatarButton.addEventListener("click", () => {
