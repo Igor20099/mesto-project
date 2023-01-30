@@ -80,7 +80,7 @@ export default class Card {
     this._removeButton.addEventListener("click", () => {
       this._deleteCard();
     });
-    this._card.addEventListener("click", () => {
+    this._image.addEventListener("click", () => {
       console.log('ok')
       this._handleCardclick();
     });
