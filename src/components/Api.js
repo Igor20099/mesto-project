@@ -3,7 +3,7 @@ export default class Api {
     this._baseUrl = options.baseUrl;
     this._headers = options.headers;
   }
-  
+
   //Получения данных пользователя
   getUserMe() {
     return fetch(`${this._baseUrl}/users/me`, {
