@@ -8,27 +8,51 @@ import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 import { settings, config } from "../utils/constants.js";
 
+let cardList;
 const api = new Api(config);
 const userInfo = new UserInfo(
   ".profile__name",
   ".profile__about",
   ".profile__image"
 );
-const popupWithAddForm = new PopupWithForm(".popup_add-card", () => {
+const popupWithAddForm = new PopupWithForm(".popup_add-card", (evt, values) => {
   evt.preventDefault();
-  popupAddSaveButton.textContent = "Создание...";
-  addCard(popupAddNameInput.value, popupLinkImageInput.value)
+  // popupAddSaveButton.textContent = "Создание...";
+  api
+    .addCard(values["card-name"], values["card-link-image"])
     .then((card) => {
-      popupAddNameInput.value = "";
-      popupLinkImageInput.value = "";
-      elementContainer.prepend(renderCard(card, profile));
-      closePopup(popupAddCard);
+      const cardElement = new Card(
+        card,
+        userInfo.getUserId(),
+        "#element",
+        (id, likes) => {
+          api.addLikeCard(id, likes);
+        },
+        (id, likes) => {
+          api.deleteLikeCard(id, likes);
+        },
+        () => {
+          popupWithImage.open(card.name, card.link);
+        },
+        (cardElement) => {
+          api
+            .deleteCard(card._id)
+            .then(() => cardElement.remove())
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+      );
+      values["card-name"] = "";
+      values["card-link-image"] = "";
+      cardList.addItem(cardElement.generate(), false);
+      popupWithAddForm.close();
     })
     .catch((err) => {
       console.log(err);
     })
     .finally(() => {
-      popupAddSaveButton.textContent = "Создать";
+      // popupAddSaveButton.textContent = "Создать";
     });
 });
 const popupWithEditForm = new PopupWithForm(
@@ -36,9 +60,7 @@ const popupWithEditForm = new PopupWithForm(
   (evt, values) => {
     evt.preventDefault();
     // popupEditSaveButton.textContent = "Сохранение...";
-    console.log("ok");
     const nameValue = values["edit-name"];
-    console.log(nameValue);
     const aboutValue = values["edit-about"];
     api
       .editProfileInfo(nameValue, aboutValue)
@@ -89,7 +111,7 @@ Promise.all([api.getUserMe(), api.getInitialCards()])
     userInfo.setUserId(userMe._id);
     userInfo.setUserInfo(userMe.name, userMe.about);
     userInfo.setUserAvatar(userMe.avatar);
-    const cardList = new Section(
+    cardList = new Section(
       {
         items: cards,
         renderer: (card) => {
@@ -106,9 +128,17 @@ Promise.all([api.getUserMe(), api.getInitialCards()])
             },
             () => {
               popupWithImage.open(card.name, card.link);
+            },
+            (cardElement) => {
+              api
+                .deleteCard(card._id)
+                .then(() => cardElement.remove())
+                .catch((err) => {
+                  console.log(err);
+                });
             }
           );
-          cardList.addItem(cardElement.generate());
+          cardList.addItem(cardElement.generate(), true);
         },
       },
       ".elements"
@@ -130,24 +160,15 @@ Promise.all([api.getUserMe(), api.getInitialCards()])
 //     });
 // }
 
-function deleteLikeHandler(elementCard, card, profile) {
-  api
-    .deleteLikeCard(card._id)
-    .then((card) => {
-      likeCard(elementCard, card.likes, profile);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}
-
-export function deleteCardHandler(element) {
-  deleteCard(element.id)
-    .then(() => element.remove())
-    .catch((err) => {
-      console.log(err);
-    });
-}
+// function deleteLikeHandler(elementCard, card, profile) {
+//   api.deleteLikeCard(card._id)
+//     .then((card) => {
+//       likeCard(elementCard, card.likes, profile);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// }
 
 //Функция обработки AddForm
 function addFormSubmitHandler(evt, values) {
@@ -182,9 +203,6 @@ profileEditButton.addEventListener("click", () => {
 profileEditAvatarButton.addEventListener("click", () => {
   popupWithEditAvatorForm.open();
 });
-
-// //Слушатель событий для popupEditAvatar
-// popupEditAvatar.addEventListener("submit", editAvatarSubmitHandler);
 
 //Открытие popupAddCard
 profileAddButton.addEventListener("click", () => {

@@ -5,8 +5,8 @@ export default class Card {
     selector,
     addLikeHandler,
     deleteLikeHandler,
-    handleCardClick
-    // deleteCardHandler,
+    handleCardClick,
+    deleteCardHandler
   ) {
     this._title = name;
     this._src = link;
@@ -18,22 +18,25 @@ export default class Card {
     this._addLikeHandler = addLikeHandler;
     this._deleteLikeHandler = deleteLikeHandler;
     this._handleCardclick = handleCardClick;
-  // this._deleteCardHandler = deleteCardHandler;
+    this._deleteCardHandler = deleteCardHandler;
+
     this._card = this._getTemplate();
     this._image = this._card.querySelector(".element__image");
     this._imageTitle = this._card.querySelector(".element__title");
     this._likeCount = this._card.querySelector(".element__like-count");
     this._likeButton = this._card.querySelector(".element__like-button");
     this._removeButton = this._card.querySelector(".element__remove-button");
+    if (this._ownerId === this._userId) {
+      this._removeButton.classList.add("element__remove-button_active");
+    }
   }
 
   _getTemplate() {
-    const cardTemplate =  document
-    .querySelector(this._selector)
-    .content
-    .querySelector('.element')
-    .cloneNode(true);
-    return cardTemplate
+    const cardTemplate = document
+      .querySelector(this._selector)
+      .content.querySelector(".element")
+      .cloneNode(true);
+    return cardTemplate;
   }
 
   _initialLikes() {
@@ -58,15 +61,6 @@ export default class Card {
     isLiked ? this._renderLike() : this._renderUnlike();
   }
 
-  _deleteCard() {
-    if (this._userId === this._ownerId) {
-      this._removeButton.classList.add("element__remove-button_active");
-      this._removeButton.addEventListener("click", () => {
-        deleteCardHandler(this._card);
-      });
-    }
-  }
-
   _setEventListeners() {
     this._likeButton.addEventListener("click", () => {
       if (!this._likeButton.classList.contains("element__like-button_active")) {
@@ -78,10 +72,9 @@ export default class Card {
       }
     });
     this._removeButton.addEventListener("click", () => {
-      this._deleteCard();
+      this._deleteCardHandler(this._card);
     });
     this._image.addEventListener("click", () => {
-      console.log('ok')
       this._handleCardclick();
     });
   }
