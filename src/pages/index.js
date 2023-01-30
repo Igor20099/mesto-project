@@ -22,6 +22,7 @@ const profile = document.querySelector('.profile');
 const profileAddButton = profile.querySelector('.profile__add-button');
 const profileEditButton = profile.querySelector('.profile__edit-button');
 const profileEditAvatarButton = profile.querySelector('.profile__edit-image-button')
+
 popupWithAddForm.setEventListeners()
 popupWithEditForm.setEventListeners()
 popupWithEditAvatorForm.setEventListeners()
