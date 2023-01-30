@@ -15,7 +15,17 @@ const userInfo = new UserInfo(
   ".profile__image"
 );
 const popupWithAddForm = new PopupWithForm('.popup_add-card',addFormSubmitHandler)
+const popupWithEditForm = new PopupWithForm('.popup_edit-profile', editFormSubmitHandler)
+const popupWithEditAvatorForm = new PopupWithForm('.popup_edit-avatar',editAvatarSubmitHandler)
+
+const profile = document.querySelector('.profile');
+const profileAddButton = profile.querySelector('.profile__add-button');
+const profileEditButton = profile.querySelector('.profile__edit-button');
+const profileEditAvatarButton = profile.querySelector('.profile__edit-image-button')
 popupWithAddForm.setEventListeners()
+popupWithEditForm.setEventListeners()
+popupWithEditAvatorForm.setEventListeners()
+
 
 Promise.all([api.getUserMe(), api.getInitialCards()])
   .then(([userMe, cards]) => {
@@ -135,15 +145,15 @@ function addFormSubmitHandler(evt,values) {
     });
 }
 
-// //Открытие popupEditProfile
-// profileEditButton.addEventListener("click", () => {
-//   clearValidation(popupEditForm, settings);
-//   popupNameInput.value = profileName.textContent;
-//   popupAboutInput.value = profileAbout.textContent;
-//   popupEditSaveButton.disable = false;
-//   popupEditSaveButton.classList.remove("popup__save-button_inactive");
-//   openPopup(popupEditProfile);
-// });
+//Открытие popupEditProfile
+profileEditButton.addEventListener("click", () => {
+  // clearValidation(popupEditForm, settings);
+  // popupNameInput.value = profileName.textContent;
+  // popupAboutInput.value = profileAbout.textContent;
+  // popupEditSaveButton.disable = false;
+  // popupEditSaveButton.classList.remove("popup__save-button_inactive");
+  popupWithEditForm.open()
+});
 
 // //Закрытие popupEditProfile
 // popupEditProfileCloseButton.addEventListener("click", () => {
@@ -153,10 +163,10 @@ function addFormSubmitHandler(evt,values) {
 // //Слушатель событий для popupEditForm
 // popupEditForm.addEventListener("submit", editFormSubmitHandler);
 
-// //Открытие popupEditAvatar
-// profileEditAvatarButton.addEventListener("click", () => {
-//   openPopup(popupEditAvatar);
-// });
+//Открытие popupEditAvatar
+profileEditAvatarButton.addEventListener("click", () => {
+  popupWithEditAvatorForm.open();
+});
 
 // //Закрытие popupEditAvatar
 // popupEditAvatarCloseButton.addEventListener("click", () => {
@@ -168,9 +178,9 @@ function addFormSubmitHandler(evt,values) {
 
 //Открытие popupAddCard
 profileAddButton.addEventListener("click", () => {
-  popupAddSaveButton.disable = true;
-  popupAddSaveButton.classList.add("popup__save-button_inactive");
-  openPopup(popupAddCard);
+  // popupAddSaveButton.disable = true;
+  // popupAddSaveButton.classList.add("popup__save-button_inactive");
+  popupWithAddForm.open()
 });
 
 // //Закрытие popupAddCard
