@@ -15,15 +15,17 @@ const userInfo = new UserInfo(
   ".profile__about",
   ".profile__image"
 );
-const editForm = document.forms[0]
-const popupEditSaveButton = editForm.querySelector('.popup__save-button')
-const editFormValidation = new FormValidator(settings,editForm);
-const addForm = document.forms[1]
-const popupAddSaveButton = addForm.querySelector('.popup__save-button')
-const addFormValidation = new FormValidator(settings,addForm);
-const editAvatarForm = document.forms[2]
-const popupEditAvatarSaveButton = editAvatarForm.querySelector('.popup__save-button')
-const editAvatarFormValidation = new FormValidator(settings,editAvatarForm);
+const editForm = document.forms[0];
+const popupEditSaveButton = editForm.querySelector(".popup__save-button");
+const editFormValidation = new FormValidator(settings, editForm);
+const addForm = document.forms[1];
+const popupAddSaveButton = addForm.querySelector(".popup__save-button");
+const addFormValidation = new FormValidator(settings, addForm);
+const editAvatarForm = document.forms[2];
+const popupEditAvatarSaveButton = editAvatarForm.querySelector(
+  ".popup__save-button"
+);
+const editAvatarFormValidation = new FormValidator(settings, editAvatarForm);
 const popupWithAddForm = new PopupWithForm(".popup_add-card", (evt, values) => {
   evt.preventDefault();
   popupAddSaveButton.textContent = "Создание...";
@@ -114,10 +116,9 @@ const profileEditAvatarButton = profile.querySelector(
   ".profile__edit-image-button"
 );
 
-
-editFormValidation.enableValidation()
-addFormValidation.enableValidation()
-editAvatarFormValidation.enableValidation()
+editFormValidation.enableValidation();
+addFormValidation.enableValidation();
+editAvatarFormValidation.enableValidation();
 
 Promise.all([api.getUserMe(), api.getInitialCards()])
   .then(([userMe, cards]) => {
@@ -133,11 +134,11 @@ Promise.all([api.getUserMe(), api.getInitialCards()])
             card,
             userInfo.getUserId(),
             "#element",
-            (id, likes) => {
-              api.addLikeCard(id, likes);
+            () => {
+              api.addLikeCard(card._id);
             },
-            (id, likes) => {
-              api.deleteLikeCard(id, likes);
+            () => {
+              api.deleteLikeCard(card._id);
             },
             () => {
               popupWithImage.open(card.name, card.link);
@@ -162,11 +163,9 @@ Promise.all([api.getUserMe(), api.getInitialCards()])
     console.log(err);
   });
 
-
 profileEditButton.addEventListener("click", () => {
   popupWithEditForm.open();
 });
-
 
 profileEditAvatarButton.addEventListener("click", () => {
   popupWithEditAvatorForm.open();
