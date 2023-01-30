@@ -18,14 +18,17 @@ const userInfo = new UserInfo(
 const editForm = document.forms[0];
 const popupEditSaveButton = editForm.querySelector(".popup__save-button");
 const editFormValidation = new FormValidator(settings, editForm);
+
 const addForm = document.forms[1];
 const popupAddSaveButton = addForm.querySelector(".popup__save-button");
 const addFormValidation = new FormValidator(settings, addForm);
+
 const editAvatarForm = document.forms[2];
 const popupEditAvatarSaveButton = editAvatarForm.querySelector(
   ".popup__save-button"
 );
 const editAvatarFormValidation = new FormValidator(settings, editAvatarForm);
+
 const popupWithAddForm = new PopupWithForm(".popup_add-card", (evt, values) => {
   evt.preventDefault();
   popupAddSaveButton.textContent = "Создание...";
@@ -64,8 +67,12 @@ const popupWithAddForm = new PopupWithForm(".popup_add-card", (evt, values) => {
     })
     .finally(() => {
       popupAddSaveButton.textContent = "Создать";
+      popupAddSaveButton.disabled = true;
+      popupAddSaveButton.classList.add('popup__save-button_inactive')
     });
 });
+popupWithAddForm.setEventListeners();
+
 const popupWithEditForm = new PopupWithForm(
   ".popup_edit-profile",
   (evt, values) => {
@@ -85,8 +92,16 @@ const popupWithEditForm = new PopupWithForm(
       .finally(() => {
         popupEditSaveButton.textContent = "Сохранить";
       });
+  },
+  () => {
+    const nameInput = editForm.querySelector('#edit-name-input');
+    const aboutInput = editForm.querySelector('#edit-about-input');
+    nameInput.value = userInfo.getUserInfo().name;
+    aboutInput.value = userInfo.getUserInfo().about
   }
 );
+popupWithEditForm.setEventListeners()
+
 const popupWithEditAvatorForm = new PopupWithForm(
   ".popup_edit-avatar",
   (evt, values) => {
@@ -107,7 +122,10 @@ const popupWithEditAvatorForm = new PopupWithForm(
       });
   }
 );
+popupWithEditAvatorForm.setEventListeners()
+
 const popupWithImage = new PopupWithImage(".popup_fullsize-image");
+popupWithImage.setEventListeners()
 
 const profile = document.querySelector(".profile");
 const profileAddButton = profile.querySelector(".profile__add-button");
@@ -174,3 +192,5 @@ profileEditAvatarButton.addEventListener("click", () => {
 profileAddButton.addEventListener("click", () => {
   popupWithAddForm.open();
 });
+
+

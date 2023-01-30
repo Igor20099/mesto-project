@@ -19,16 +19,6 @@ export default class Card {
     this._deleteLikeHandler = deleteLikeHandler;
     this._handleCardclick = handleCardClick;
     this._deleteCardHandler = deleteCardHandler;
-
-    this._card = this._getTemplate();
-    this._image = this._card.querySelector(".element__image");
-    this._imageTitle = this._card.querySelector(".element__title");
-    this._likeCount = this._card.querySelector(".element__like-count");
-    this._likeButton = this._card.querySelector(".element__like-button");
-    this._removeButton = this._card.querySelector(".element__remove-button");
-    if (this._ownerId === this._userId) {
-      this._removeButton.classList.add("element__remove-button_active");
-    }
   }
 
   _getTemplate() {
@@ -80,6 +70,15 @@ export default class Card {
   }
 
   generate() {
+    this._card = this._getTemplate();
+    this._image = this._card.querySelector(".element__image");
+    this._imageTitle = this._card.querySelector(".element__title");
+    this._likeCount = this._card.querySelector(".element__like-count");
+    this._likeButton = this._card.querySelector(".element__like-button");
+    this._removeButton = this._card.querySelector(".element__remove-button");
+    if (this._ownerId === this._userId) {
+      this._removeButton.classList.add("element__remove-button_active");
+    }
     this._image.src = this._src;
     this._image.alt = this._title;
     this._imageTitle.textContent = this._title;
