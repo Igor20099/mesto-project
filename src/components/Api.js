@@ -4,6 +4,7 @@ export default class Api {
     this._headers = options.headers;
   }
   
+  //Получения данных пользователя
   getUserMe() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
@@ -15,6 +16,7 @@ export default class Api {
     });
   }
 
+  //инициализация карточек с сервера
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
@@ -26,6 +28,7 @@ export default class Api {
     });
   }
 
+  //изменение данных пользователя на сервере
   editProfileInfo(name, about) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
@@ -37,6 +40,7 @@ export default class Api {
     });
   }
 
+  //изменение аватара на сервере
   changeAvatar(avatar) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
@@ -52,6 +56,7 @@ export default class Api {
     });
   }
 
+  //добавление карточки на сервер
   addCard(name, link) {
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
@@ -69,6 +74,7 @@ export default class Api {
     });
   }
 
+  //удаление карточки с сервера
   deleteCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
@@ -76,6 +82,7 @@ export default class Api {
     });
   }
 
+  //добавления лайка карточки
   addLikeCard(cardId) {
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: "PUT",
@@ -88,6 +95,7 @@ export default class Api {
     });
   }
 
+  //удаление лайка карточки
   deleteLikeCard(cardId) {
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: "DELETE",
@@ -100,109 +108,3 @@ export default class Api {
     });
   }
 }
-
-
-
-//Получаем свои данные (###)
-// export function getUserMe() {
-//   return fetch(`${config.baseUrl}/users/me`, {
-//     headers: config.headers,
-//   }).then((res) => {
-//     if (res.ok) {
-//       return res.json();
-//     }
-//     return Promise.reject(`Ошибка: ${res.status}`);
-//   });
-// }
-
-//Получаем карточки (###)
-// export function getInitialCards() {
-//   return fetch(`${config.baseUrl}/cards`, {
-//     headers: config.headers,
-//   }).then((res) => {
-//     if (res.ok) {
-//       return res.json();
-//     }
-//     return Promise.reject(`Ошибка: ${res.status}`);
-//   });
-// }
-
-//Редактируем в профиле имя и о себе (###)
-// export function editProfileInfo(name, about) {
-//   return fetch(`${config.baseUrl}/users/me`, {
-//     method: "PATCH",
-//     headers: config.headers,
-//     body: JSON.stringify({
-//       name: name,
-//       about: about,
-//     }),
-//   });
-// }
-
-//Меняем аватар (###)
-// export function changeAvatar(avatar) {
-//   return fetch(`${config.baseUrl}/users/me/avatar`, {
-//     method: "PATCH",
-//     headers: config.headers,
-//     body: JSON.stringify({
-//       avatar:avatar
-//     }),
-//   }).then((res) => {
-//     if (res.ok) {
-//       return res.json();
-//     }
-//     return Promise.reject(`Ошибка: ${res.status}`);
-//   });
-// }
-
-//Отправляем новую карточку на сервер (###)
-// export function addCard(name, link) {
-//   return fetch(`${config.baseUrl}/cards`, {
-//     method: "POST",
-//     headers: config.headers,
-//     body: JSON.stringify({
-//       name: name,
-//       link: link,
-//     }),
-//   }).then(res => {
-//     if (res.ok) {
-//       return res.json();
-//     }
-
-//     return Promise.reject(`Ошибка: ${res.status}`);
-//   });
-// }
-
-//Удаляем карточку с сервера (###)
-// export function deleteCard(cardId) {
-//   return fetch(`${config.baseUrl}/cards/${cardId}`, {
-//     method: "DELETE",
-//     headers: config.headers,
-//   });
-// }
-
-//Добавляем карточке лайк (###)
-// export function addLikeCard(cardId) {
-//   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
-//     method: "PUT",
-//     headers: config.headers,
-//   }).then((res) => {
-//     if (res.ok) {
-//       return res.json();
-//     }
-//     return Promise.reject(`Ошибка: ${res.status}`);
-//   });
-// }
-
-//Удаляем у карточки лайк
-// export function deleteLikeCard(cardId) {
-//   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
-//     method: "DELETE",
-//     headers: config.headers,
-//   }).then((res) => {
-//     if (res.ok) {
-//       return res.json();
-//     }
-//     return Promise.reject(`Ошибка: ${res.status}`);
-//   });
-// }

@@ -15,9 +15,18 @@ const userInfo = new UserInfo(
   ".profile__about",
   ".profile__image"
 );
+const editForm = document.forms[0]
+const popupEditSaveButton = editForm.querySelector('.popup__save-button')
+const editFormValidation = new FormValidator(settings,editForm);
+const addForm = document.forms[1]
+const popupAddSaveButton = addForm.querySelector('.popup__save-button')
+const addFormValidation = new FormValidator(settings,addForm);
+const editAvatarForm = document.forms[2]
+const popupEditAvatarSaveButton = editAvatarForm.querySelector('.popup__save-button')
+const editAvatarFormValidation = new FormValidator(settings,editAvatarForm);
 const popupWithAddForm = new PopupWithForm(".popup_add-card", (evt, values) => {
   evt.preventDefault();
-  // popupAddSaveButton.textContent = "Создание...";
+  popupAddSaveButton.textContent = "Создание...";
   api
     .addCard(values["card-name"], values["card-link-image"])
     .then((card) => {
@@ -52,14 +61,14 @@ const popupWithAddForm = new PopupWithForm(".popup_add-card", (evt, values) => {
       console.log(err);
     })
     .finally(() => {
-      // popupAddSaveButton.textContent = "Создать";
+      popupAddSaveButton.textContent = "Создать";
     });
 });
 const popupWithEditForm = new PopupWithForm(
   ".popup_edit-profile",
   (evt, values) => {
     evt.preventDefault();
-    // popupEditSaveButton.textContent = "Сохранение...";
+    popupEditSaveButton.textContent = "Сохранение...";
     const nameValue = values["edit-name"];
     const aboutValue = values["edit-about"];
     api
@@ -72,7 +81,7 @@ const popupWithEditForm = new PopupWithForm(
         console.log(err);
       })
       .finally(() => {
-        // popupEditSaveButton.textContent = "Сохранить";
+        popupEditSaveButton.textContent = "Сохранить";
       });
   }
 );
@@ -80,7 +89,7 @@ const popupWithEditAvatorForm = new PopupWithForm(
   ".popup_edit-avatar",
   (evt, values) => {
     evt.preventDefault();
-    // popupEditAvatarSaveButton.textContent = "Сохранение...";
+    popupEditAvatarSaveButton.textContent = "Сохранение...";
     const linkAvatar = values["edit-avatar-link"];
     api
       .changeAvatar(linkAvatar)
@@ -92,7 +101,7 @@ const popupWithEditAvatorForm = new PopupWithForm(
         console.log(err);
       })
       .finally(() => {
-        // popupEditAvatarSaveButton.textContent = "Сохранить";
+        popupEditAvatarSaveButton.textContent = "Сохранить";
       });
   }
 );
@@ -104,12 +113,7 @@ const profileEditButton = profile.querySelector(".profile__edit-button");
 const profileEditAvatarButton = profile.querySelector(
   ".profile__edit-image-button"
 );
-const editForm = document.forms[0]
-const editFormValidation = new FormValidator(settings,editForm);
-const addForm = document.forms[1]
-const addFormValidation = new FormValidator(settings,addForm);
-const editAvatarForm = document.forms[2]
-const editAvatarFormValidation = new FormValidator(settings,editAvatarForm);
+
 
 editFormValidation.enableValidation()
 addFormValidation.enableValidation()
@@ -158,64 +162,16 @@ Promise.all([api.getUserMe(), api.getInitialCards()])
     console.log(err);
   });
 
-// function addLikeHandler(elementCard, card, profile) {
-//   api
-//     .addLikeCard(card._id)
-//     .then((card) => {
-//       likeCard(elementCard, card.likes, profile);
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// }
 
-// function deleteLikeHandler(elementCard, card, profile) {
-//   api.deleteLikeCard(card._id)
-//     .then((card) => {
-//       likeCard(elementCard, card.likes, profile);
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// }
-
-//Функция обработки AddForm
-function addFormSubmitHandler(evt, values) {
-  evt.preventDefault();
-  popupAddSaveButton.textContent = "Создание...";
-  addCard(popupAddNameInput.value, popupLinkImageInput.value)
-    .then((card) => {
-      popupAddNameInput.value = "";
-      popupLinkImageInput.value = "";
-      elementContainer.prepend(renderCard(card, profile));
-      closePopup(popupAddCard);
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-    .finally(() => {
-      popupAddSaveButton.textContent = "Создать";
-    });
-}
-
-//Открытие popupEditProfile
 profileEditButton.addEventListener("click", () => {
-  // clearValidation(popupEditForm, settings);
-  // popupNameInput.value = profileName.textContent;
-  // popupAboutInput.value = profileAbout.textContent;
-  // popupEditSaveButton.disable = false;
-  // popupEditSaveButton.classList.remove("popup__save-button_inactive");
   popupWithEditForm.open();
 });
 
-//Открытие popupEditAvatar
+
 profileEditAvatarButton.addEventListener("click", () => {
   popupWithEditAvatorForm.open();
 });
 
-//Открытие popupAddCard
 profileAddButton.addEventListener("click", () => {
-  // popupAddSaveButton.disable = true;
-  // popupAddSaveButton.classList.add("popup__save-button_inactive");
   popupWithAddForm.open();
 });

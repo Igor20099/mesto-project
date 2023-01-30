@@ -13,7 +13,5 @@ export default class Section {
 
   addItem(item, isAppend) {
     isAppend ? this._container.append(item) : this._container.prepend(item);
-   
   }
-  
 }
