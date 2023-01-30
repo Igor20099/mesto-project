@@ -7,6 +7,7 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 import { settings, config } from "../utils/constants.js";
+import { setButtonActive } from "../utils/utils.js";
 
 let cardList;
 const api = new Api(config);
@@ -67,8 +68,7 @@ const popupWithAddForm = new PopupWithForm(".popup_add-card", (evt, values) => {
     })
     .finally(() => {
       popupAddSaveButton.textContent = "Создать";
-      popupAddSaveButton.disabled = true;
-      popupAddSaveButton.classList.add('popup__save-button_inactive')
+      setButtonActive(popupAddSaveButton,'popup__save-button_inactive',false)
     });
 });
 popupWithAddForm.setEventListeners();
@@ -119,6 +119,7 @@ const popupWithEditAvatorForm = new PopupWithForm(
       })
       .finally(() => {
         popupEditAvatarSaveButton.textContent = "Сохранить";
+        setButtonActive(popupEditAvatarSaveButton,'popup__save-button_inactive',false)
       });
   }
 );
@@ -147,7 +148,6 @@ Promise.all([api.getUserMe(), api.getInitialCards()])
       {
         items: cards,
         renderer: (card) => {
-          console.log(card);
           const cardElement = new Card(
             card,
             userInfo.getUserId(),
@@ -182,14 +182,18 @@ Promise.all([api.getUserMe(), api.getInitialCards()])
   });
 
 profileEditButton.addEventListener("click", () => {
+  editFormValidation.clearValidation()
+  setButtonActive(popupEditSaveButton,'popup__save-button_inactive',true)
   popupWithEditForm.open();
 });
 
 profileEditAvatarButton.addEventListener("click", () => {
+  editAvatarFormValidation.clearValidation()
   popupWithEditAvatorForm.open();
 });
 
 profileAddButton.addEventListener("click", () => {
+  addFormValidation.clearValidation()
   popupWithAddForm.open();
 });
 
