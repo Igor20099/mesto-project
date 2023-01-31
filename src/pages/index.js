@@ -41,10 +41,14 @@ const popupWithAddForm = new PopupWithForm(".popup_add-card", (evt, values) => {
         userInfo.getUserId(),
         "#element",
         () => {
-          api.addLikeCard(card._id);
+          api.addLikeCard(card._id).catch((err) => {
+            console.log(err);
+          });;
         },
         () => {
-          api.deleteLikeCard(card._id);
+          api.deleteLikeCard(card._id).catch((err) => {
+            console.log(err);
+          });
         },
         () => {
           popupWithImage.open(card.name, card.link);
@@ -153,10 +157,14 @@ Promise.all([api.getUserMe(), api.getInitialCards()])
             userInfo.getUserId(),
             "#element",
             () => {
-              api.addLikeCard(card._id);
+              api.addLikeCard(card._id).catch((err) => {
+                console.log(err);
+              });
             },
             () => {
-              api.deleteLikeCard(card._id);
+              api.deleteLikeCard(card._id).catch((err) => {
+                console.log(err);
+              });
             },
             () => {
               popupWithImage.open(card.name, card.link);
