@@ -40,11 +40,11 @@ const popupWithAddForm = new PopupWithForm(".popup_add-card", (evt, values) => {
         card,
         userInfo.getUserId(),
         "#element",
-        (id, likes) => {
-          api.addLikeCard(id, likes);
+        () => {
+          api.addLikeCard(card._id);
         },
-        (id, likes) => {
-          api.deleteLikeCard(id, likes);
+        () => {
+          api.deleteLikeCard(card._id);
         },
         () => {
           popupWithImage.open(card.name, card.link);
@@ -68,7 +68,7 @@ const popupWithAddForm = new PopupWithForm(".popup_add-card", (evt, values) => {
     })
     .finally(() => {
       popupAddSaveButton.textContent = "Создать";
-      setButtonActive(popupAddSaveButton,'popup__save-button_inactive',false)
+      setButtonActive(popupAddSaveButton, 'popup__save-button_inactive', false)
     });
 });
 popupWithAddForm.setEventListeners();
@@ -119,7 +119,7 @@ const popupWithEditAvatorForm = new PopupWithForm(
       })
       .finally(() => {
         popupEditAvatarSaveButton.textContent = "Сохранить";
-        setButtonActive(popupEditAvatarSaveButton,'popup__save-button_inactive',false)
+        setButtonActive(popupEditAvatarSaveButton, 'popup__save-button_inactive', false)
       });
   }
 );
@@ -183,7 +183,7 @@ Promise.all([api.getUserMe(), api.getInitialCards()])
 
 profileEditButton.addEventListener("click", () => {
   editFormValidation.clearValidation()
-  setButtonActive(popupEditSaveButton,'popup__save-button_inactive',true)
+  setButtonActive(popupEditSaveButton, 'popup__save-button_inactive', true)
   popupWithEditForm.open();
 });
 
