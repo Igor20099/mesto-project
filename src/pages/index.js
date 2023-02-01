@@ -144,13 +144,23 @@ function createCard(item) {
     item,
     userInfo.getUserId(),
     "#element",
-    () => {
-      api.addLikeCard(item._id).catch((err) => {
+    (likeCount, likeButton) => {
+      api.addLikeCard(item._id)
+      .then(({likes}) => {
+        likeCount.textContent = likes.length;
+        likeButton.classList.add("element__like-button_active");
+      })
+      .catch((err) => {
         console.log(err);
       });
     },
-    () => {
-      api.deleteLikeCard(item._id).catch((err) => {
+    (likeCount, likeButton) => {
+      api.deleteLikeCard(item._id)
+      .then(({likes}) => {
+        likeCount.textContent = likes.length;
+        likeButton.classList.remove("element__like-button_active");
+      })
+      .catch((err) => {
         console.log(err);
       });
     },

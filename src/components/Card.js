@@ -36,29 +36,13 @@ export default class Card {
       }
     });
   }
-
-  _renderLike() {
-    this._likeButton.classList.add("element__like-button_active");
-    this._likeCount.textContent = +this._likeCount.textContent + 1;
-  }
-
-  _renderUnlike() {
-    this._likeButton.classList.remove("element__like-button_active");
-    this._likeCount.textContent = +this._likeCount.textContent - 1;
-  }
-
-  _likeCard(isLiked) {
-    isLiked ? this._renderLike() : this._renderUnlike();
-  }
-
+  
   _setEventListeners() {
     this._likeButton.addEventListener("click", () => {
       if (!this._likeButton.classList.contains("element__like-button_active")) {
-        this._addLikeHandler(this._cardId, this._likes);
-        this._likeCard(true);
+        this._addLikeHandler(this._likeCount, this._likeButton);
       } else {
-        this._deleteLikeHandler(this._cardId, this._likes);
-        this._likeCard(false);
+        this._deleteLikeHandler(this._likeCount, this._likeButton);
       }
     });
     this._removeButton.addEventListener("click", () => {
