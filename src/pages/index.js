@@ -75,7 +75,6 @@ const popupWithAddForm = new PopupWithForm(".popup_add-card", (evt, values) => {
       popupAddSaveButton.textContent = "Создать";
     });
 });
-popupWithAddForm.setEventListeners();
 
 const popupWithEditForm = new PopupWithForm(
   ".popup_edit-profile",
@@ -103,7 +102,6 @@ const popupWithEditForm = new PopupWithForm(
     aboutInput.value = info.about;
   }
 );
-popupWithEditForm.setEventListeners();
 
 const popupWithEditAvatorForm = new PopupWithForm(
   ".popup_edit-avatar",
@@ -125,7 +123,6 @@ const popupWithEditAvatorForm = new PopupWithForm(
       });
   }
 );
-popupWithEditAvatorForm.setEventListeners();
 
 const popupWithImage = new PopupWithImage(".popup_fullsize-image");
 popupWithImage.setEventListeners();
@@ -136,6 +133,10 @@ const profileEditButton = profile.querySelector(".profile__edit-button");
 const profileEditAvatarButton = profile.querySelector(
   ".profile__edit-image-button"
 );
+
+popupWithAddForm.setEventListeners();
+popupWithEditForm.setEventListeners();
+popupWithEditAvatorForm.setEventListeners();
 
 editFormValidation.enableValidation();
 addFormValidation.enableValidation();
