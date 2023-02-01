@@ -4,28 +4,27 @@ export default class Api {
     this._headers = options.headers;
   }
 
-  //Получения данных пользователя
-  getUserMe() {
-    return fetch(`${this._baseUrl}/users/me`, {
-      headers: this._headers,
-    }).then((res) => {
+  _checkResponse(res) {
+    {
       if (res.ok) {
         return res.json();
       }
       return Promise.reject(`Ошибка: ${res.status}`);
-    });
+    }
+  }
+
+  //Получения данных пользователя
+  getUserMe() {
+    return fetch(`${this._baseUrl}/users/me`, {
+      headers: this._headers,
+    }).then(this._checkResponse);
   }
 
   //инициализация карточек с сервера
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    });
+    }).then(this._checkResponse);
   }
 
   //изменение данных пользователя на сервере
@@ -37,7 +36,7 @@ export default class Api {
         name: name,
         about: about,
       }),
-    });
+    }).then(this._checkResponse);
   }
 
   //изменение аватара на сервере
@@ -48,12 +47,7 @@ export default class Api {
       body: JSON.stringify({
         avatar: avatar,
       }),
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    });
+    }).then(this._checkResponse);
   }
 
   //добавление карточки на сервер
@@ -65,13 +59,7 @@ export default class Api {
         name: name,
         link: link,
       }),
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-
-      return Promise.reject(`Ошибка: ${res.status}`);
-    });
+    }).then(this._checkResponse);
   }
 
   //удаление карточки с сервера
@@ -79,7 +67,7 @@ export default class Api {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
-    });
+    }).then(this._checkResponse);
   }
 
   //добавления лайка карточки
@@ -87,12 +75,7 @@ export default class Api {
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: "PUT",
       headers: this._headers,
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    });
+    }).then(this._checkResponse);
   }
 
   //удаление лайка карточки
@@ -100,11 +83,6 @@ export default class Api {
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    });
+    }).then(this._checkResponse);
   }
 }
