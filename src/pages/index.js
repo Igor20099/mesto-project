@@ -7,7 +7,6 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 import { settings, config } from "../utils/constants.js";
-import { setButtonActive } from "../utils/utils.js";
 
 let cardList;
 const api = new Api(config);
@@ -16,19 +15,21 @@ const userInfo = new UserInfo(
   ".profile__about",
   ".profile__image"
 );
-const editForm = document.forms[0];
+const editForm = document.forms['edit-info'];
 const popupEditSaveButton = editForm.querySelector(".popup__save-button");
 const editFormValidation = new FormValidator(settings, editForm);
 
-const addForm = document.forms[1];
+const addForm = document.forms['add-card'];
 const popupAddSaveButton = addForm.querySelector(".popup__save-button");
 const addFormValidation = new FormValidator(settings, addForm);
 
-const editAvatarForm = document.forms[2];
+const editAvatarForm = document.forms['avatar-form'];
 const popupEditAvatarSaveButton = editAvatarForm.querySelector(
   ".popup__save-button"
 );
 const editAvatarFormValidation = new FormValidator(settings, editAvatarForm);
+const nameInput = editForm.querySelector('#edit-name-input');
+const aboutInput = editForm.querySelector('#edit-about-input');
 
 const popupWithAddForm = new PopupWithForm(".popup_add-card", (evt, values) => {
   evt.preventDefault();
@@ -72,7 +73,6 @@ const popupWithAddForm = new PopupWithForm(".popup_add-card", (evt, values) => {
     })
     .finally(() => {
       popupAddSaveButton.textContent = "Создать";
-      setButtonActive(popupAddSaveButton, 'popup__save-button_inactive', false)
     });
 });
 popupWithAddForm.setEventListeners();
@@ -98,10 +98,10 @@ const popupWithEditForm = new PopupWithForm(
       });
   },
   () => {
-    const nameInput = editForm.querySelector('#edit-name-input');
-    const aboutInput = editForm.querySelector('#edit-about-input');
-    nameInput.value = userInfo.getUserInfo().name;
-    aboutInput.value = userInfo.getUserInfo().about
+    
+    const info = userInfo.getUserInfo();
+    nameInput.value = info.name;
+    aboutInput.value = info.about
   }
 );
 popupWithEditForm.setEventListeners()
@@ -123,7 +123,6 @@ const popupWithEditAvatorForm = new PopupWithForm(
       })
       .finally(() => {
         popupEditAvatarSaveButton.textContent = "Сохранить";
-        setButtonActive(popupEditAvatarSaveButton, 'popup__save-button_inactive', false)
       });
   }
 );
@@ -190,18 +189,17 @@ Promise.all([api.getUserMe(), api.getInitialCards()])
   });
 
 profileEditButton.addEventListener("click", () => {
-  editFormValidation.clearValidation()
-  setButtonActive(popupEditSaveButton, 'popup__save-button_inactive', true)
+  editFormValidation.resetValidation()
   popupWithEditForm.open();
 });
 
 profileEditAvatarButton.addEventListener("click", () => {
-  editAvatarFormValidation.clearValidation()
+  editAvatarFormValidation.resetValidation()
   popupWithEditAvatorForm.open();
 });
 
 profileAddButton.addEventListener("click", () => {
-  addFormValidation.clearValidation()
+  addFormValidation.resetValidation()
   popupWithAddForm.open();
 });
 

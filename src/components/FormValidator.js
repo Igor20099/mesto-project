@@ -34,13 +34,13 @@ export default class FormValidator {
     });
   }
 
-  _toggleButtonState(inputList, buttonElement) {
-    if (this._hasInvalidInput(inputList)) {
-      buttonElement.disabled = true;
-      buttonElement.classList.add(this._settings.inactiveButtonClass);
+  _toggleButtonState() {
+    if (this._hasInvalidInput(this._inputList)) {
+      this._submitButton.disabled = true;
+      this._submitButton.classList.add(this._settings.inactiveButtonClass);
     } else {
-      buttonElement.disabled = false;
-      buttonElement.classList.remove(this._settings.inactiveButtonClass);
+      this._submitButton.disabled = false;
+      this._submitButton.classList.remove(this._settings.inactiveButtonClass);
     }
   }
 
@@ -59,19 +59,11 @@ export default class FormValidator {
   }
 
   _setEventListeners() {
-    this._toggleButtonState(
-      this._inputList,
-      this._submitButton,
-    );
+    this._toggleButtonState();
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
-        this._isValid(
-          inputElement,
-        );
-        this._toggleButtonState(
-          this._inputList,
-          this._submitButton,
-        );
+        this._isValid(inputElement);
+        this._toggleButtonState();
       });
     });
   }
@@ -80,19 +72,10 @@ export default class FormValidator {
     this._setEventListeners();
   }
 
-  clearValidation() {
-    const errorMessages = Array.from(
-      this._formElement.querySelectorAll(this._settings.errorMessage)
-    );
+  resetValidation() {
+    this._toggleButtonState();
     this._inputList.forEach((inputElement) => {
-      if (inputElement.classList.contains(this._settings.inputErrorClass)) {
-        inputElement.classList.remove(this._settings.inputErrorClass);
-      }
-    });
-    errorMessages.forEach((errorMessage) => {
-      if (errorMessage.classList.contains(this._settings.errorClass)) {
-        errorMessage.classList.remove(this._settings.errorClass);
-      }
+      this._hideInputError(inputElement);
     });
   }
 }
