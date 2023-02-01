@@ -37,35 +37,10 @@ const popupWithAddForm = new PopupWithForm(".popup_add-card", (evt, values) => {
   api
     .addCard(values["card-name"], values["card-link-image"])
     .then((card) => {
-      const cardElement = new Card(
-        card,
-        userInfo.getUserId(),
-        "#element",
-        () => {
-          api.addLikeCard(card._id).catch((err) => {
-            console.log(err);
-          });
-        },
-        () => {
-          api.deleteLikeCard(card._id).catch((err) => {
-            console.log(err);
-          });
-        },
-        () => {
-          popupWithImage.open(card.name, card.link);
-        },
-        (cardElement) => {
-          api
-            .deleteCard(card._id)
-            .then(() => cardElement.remove())
-            .catch((err) => {
-              console.log(err);
-            });
-        }
-      );
+      const cardElement = createCard(card)
       values["card-name"] = "";
       values["card-link-image"] = "";
-      cardList.addItem(cardElement.generate(), false);
+      cardList.addItem(cardElement, false);
       popupWithAddForm.close();
     })
     .catch((err) => {
@@ -151,33 +126,8 @@ Promise.all([api.getUserMe(), api.getInitialCards()])
       {
         items: cards,
         renderer: (card) => {
-          const cardElement = new Card(
-            card,
-            userInfo.getUserId(),
-            "#element",
-            () => {
-              api.addLikeCard(card._id).catch((err) => {
-                console.log(err);
-              });
-            },
-            () => {
-              api.deleteLikeCard(card._id).catch((err) => {
-                console.log(err);
-              });
-            },
-            () => {
-              popupWithImage.open(card.name, card.link);
-            },
-            (cardElement) => {
-              api
-                .deleteCard(card._id)
-                .then(() => cardElement.remove())
-                .catch((err) => {
-                  console.log(err);
-                });
-            }
-          );
-          cardList.addItem(cardElement.generate(), true);
+          const cardElement = createCard(card);
+          cardList.addItem(cardElement, true);
         },
       },
       ".elements"
@@ -187,6 +137,39 @@ Promise.all([api.getUserMe(), api.getInitialCards()])
   .catch((err) => {
     console.log(err);
   });
+
+
+function createCard(item) {
+  const card = new Card(
+    item,
+    userInfo.getUserId(),
+    "#element",
+    () => {
+      api.addLikeCard(item._id).catch((err) => {
+        console.log(err);
+      });
+    },
+    () => {
+      api.deleteLikeCard(item._id).catch((err) => {
+        console.log(err);
+      });
+    },
+    () => {
+      popupWithImage.open(item.name, item.link);
+    },
+    (cardElement) => {
+      api
+        .deleteCard(item._id)
+        .then(() => cardElement.remove())
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  );
+  const cardElement = card.generate();
+  return cardElement
+}
+
 
 profileEditButton.addEventListener("click", () => {
   editFormValidation.resetValidation();
