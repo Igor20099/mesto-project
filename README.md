@@ -9,4 +9,9 @@
 * CSS Grid
 * JavaScript
 
+## Парное программирование ООП
+GitHub напарника https://github.com/creamyspinach
+
+Почта напарника vaiapal12@yandex.ru
+
 [Ссылка на проект](https://igor20099.github.io/mesto-project/)
